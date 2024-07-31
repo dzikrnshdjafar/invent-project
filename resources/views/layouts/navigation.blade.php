@@ -19,7 +19,10 @@
                         {{ __('Items') }}
                     </x-nav-link>
                     <x-nav-link :href="route('rooms.index')" :active="request()->routeIs('rooms.*')">
-                        {{ __('rooms') }}
+                        {{ __('Rooms') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('loans.index')" :active="request()->routeIs('loans.*')">
+                        {{ __('Loans') }}
                     </x-nav-link>
                 </div>
             </div>

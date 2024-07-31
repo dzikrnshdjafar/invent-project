@@ -20,12 +20,10 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // User::create([
-        //     'name' => 'Atmint',
-        //     'email' => 'admin@gmail.com',
-        //     'password' => bcrypt('admin'),
-        // ]);
-
+        $this->call(RoomSeeder::class);
+        $this->call(ItemSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(PermissionsSeeder::class);
         $this->call(RoleSeeder::class);
     }
 }
