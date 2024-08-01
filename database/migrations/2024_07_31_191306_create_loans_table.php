@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('item_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->integer('loan_duration')->nullable();
             $table->date('return_date')->nullable();
             $table->string('status')->default('borrowed'); // Status can be 'borrowed' or 'returned'
             $table->timestamps();

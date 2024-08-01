@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\Loan;
 use Illuminate\Http\Request;
+use App\Jobs\SendLoanReminder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -45,12 +46,22 @@ class LoanController extends Controller
 
         $request->validate([
             'item_id' => 'required|exists:items,id',
+            'loan_duration' => 'required|integer|min:1'
         ]);
 
-        Loan::create([
+        $loan = Loan::create([
             'item_id' => $request->item_id,
-            'user_id' => Auth::id(),
+            'user_id' => auth()->id(),
+            'loan_duration' => $request->loan_duration,
+            'status' => 'borrowed',
         ]);
+
+        // Ensure loan_duration is an integer
+        $loanDuration = intval($request->loan_duration);
+
+        // Schedule WhatsApp reminder
+        SendLoanReminder::dispatch($loan)->delay(now()->addMinutes($loanDuration));
+
 
         return redirect()->route('loans.index')->with('success', 'Loan created successfully.');
     }

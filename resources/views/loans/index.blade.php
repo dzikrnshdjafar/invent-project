@@ -12,6 +12,7 @@
                     @endif
                     <th>Loan Date</th>
                     <th>Return Date</th>
+                    <th>Duration (days)</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -24,6 +25,7 @@
                         @if (Auth::user()->hasRole('Admin'))
                             <td>{{ $loan->user->name }}</td> <!-- Only display this cell if the user is Admin -->
                         @endif
+                        <td>{{ $loan->loan_duration }}</td>
                         <td>{{ $loan->created_at }}</td>
                         <td>{{ $loan->return_date ?? 'Not returned yet' }}</td>
                         <td>{{ $loan->status }}</td>
