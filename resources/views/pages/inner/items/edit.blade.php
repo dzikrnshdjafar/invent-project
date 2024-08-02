@@ -1,6 +1,7 @@
+@section('title', 'Ubah Barang')
+
 <x-app-layout>
-    <div class="container">
-        <h1>Edit Item</h1>
+    <x-form-card :title="'Ubah Barang'" :backLink="route('items.index')">
         <form action="{{ route('items.update', $item->id) }}" method="POST">
             @csrf
             @method('PUT')
@@ -26,5 +27,5 @@
             </div>
             <button type="submit" class="btn btn-primary mt-3">Update Item</button>
         </form>
-    </div>
+    </x-form-card>
 </x-app-layout>

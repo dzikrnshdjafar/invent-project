@@ -15,17 +15,15 @@ class LoanController extends Controller
     {
         $user = Auth::user();
 
-        // Check if the user is an admin
         if ($user->hasRole('Admin')) {
             $loans = Loan::with('item', 'user')->get();
         } else {
-            // Filter loans based on the logged-in user for non-admin users
             $loans = Loan::with('item', 'user')
                 ->where('user_id', $user->id)
                 ->get();
         }
 
-        return view('loans.index', compact('loans'));
+        return view('pages.inner.loans.index', compact('loans'));
     }
 
     public function create()
@@ -35,7 +33,7 @@ class LoanController extends Controller
         }
 
         $items = Item::all();
-        return view('loans.create', compact('items'));
+        return view('pages.inner.loans.create', compact('items'));
     }
 
     public function store(Request $request)
@@ -46,13 +44,23 @@ class LoanController extends Controller
 
         $request->validate([
             'item_id' => 'required|exists:items,id',
-            'loan_duration' => 'required|integer|min:1'
+            'loan_duration' => 'required|integer|min:1',
+            'quantity' => 'required|integer|min:1',
         ]);
+
+        $item = Item::find($request->item_id);
+
+        if ($item->quantity < $request->quantity) {
+            return redirect()->back()->with('error', 'Insufficient item quantity.');
+        }
+
+        $item->decrement('quantity', $request->quantity);
 
         $loan = Loan::create([
             'item_id' => $request->item_id,
             'user_id' => auth()->id(),
             'loan_duration' => $request->loan_duration,
+            'quantity' => $request->quantity,
             'status' => 'borrowed',
         ]);
 
@@ -62,13 +70,12 @@ class LoanController extends Controller
         // Schedule WhatsApp reminder
         SendLoanReminder::dispatch($loan)->delay(now()->addMinutes($loanDuration));
 
-
         return redirect()->route('loans.index')->with('success', 'Loan created successfully.');
     }
 
     public function show(Loan $loan)
     {
-        return view('loans.show', compact('loan'));
+        return view('pages.inner.loans.show', compact('loan'));
     }
 
     public function edit(Loan $loan)
@@ -78,7 +85,7 @@ class LoanController extends Controller
         }
 
         $items = Item::all();
-        return view('loans.edit', compact('loan', 'items'));
+        return view('pages.inner.loans.edit', compact('loan', 'items'));
     }
 
     public function update(Request $request, Loan $loan)
@@ -89,7 +96,7 @@ class LoanController extends Controller
 
         $request->validate([
             'item_id' => 'required|exists:items,id',
-            'return_date' => 'nullable|date',
+            'loan_duration' => 'nullable|integer|min:1',
             'status' => 'required|in:borrowed,returned',
         ]);
 
@@ -111,10 +118,17 @@ class LoanController extends Controller
 
     public function returnItem(Loan $loan)
     {
+        if (Gate::denies('Return Items')) {
+            abort(403);
+        }
+
         $loan->update([
             'return_date' => now(),
             'status' => 'returned',
         ]);
+
+        $item = $loan->item;
+        $item->increment('quantity', $loan->quantity);
 
         return redirect()->route('loans.index')->with('success', 'Item returned successfully.');
     }

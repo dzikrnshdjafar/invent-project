@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('rooms', RoomController::class)->middleware('role:Admin|Pengelola');
 
     Route::resource('loans', LoanController::class);
-    Route::put('loans/{loan}/return', [LoanController::class, 'returnItem'])->name('loans.returnItem')->middleware('role:Peminjam');
+    Route::put('loans/{loan}/return', [LoanController::class, 'returnItem'])->name('loans.returnItem')->middleware('role:Admin');
 });
 
 

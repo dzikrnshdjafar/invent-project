@@ -1,6 +1,7 @@
+@section('title', 'Tambah Ruangan')
+
 <x-app-layout>
-    <div class="container">
-        <h1>Add Room</h1>
+    <x-form-card :title="'Form Tambah Ruangan'" :backLink="route('rooms.index')">
         <form action="{{ route('rooms.store') }}" method="POST">
             @csrf
             <div class="form-group">
@@ -9,5 +10,5 @@
             </div>
             <button type="submit" class="btn btn-primary mt-3">Add Room</button>
         </form>
-    </div>
+    </x-form-card>
 </x-app-layout>

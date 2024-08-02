@@ -58,7 +58,7 @@ class RoleSeeder extends Seeder
         }
 
         if ($returnItemsPermission) {
-            $peminjamRole->givePermissionTo($returnItemsPermission);
+            $adminRole->givePermissionTo($returnItemsPermission);
         }
     }
 }

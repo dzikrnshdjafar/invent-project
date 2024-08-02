@@ -1,6 +1,7 @@
+@section('title', 'Ubah Peminjaman')
+
 <x-app-layout>
-    <div class="container">
-        <h1>Edit Loan</h1>
+    <x-form-card :title="'Ubah Peminjaman'" :backLink="route('loans.index')">
         <form action="{{ route('loans.update', $loan->id) }}" method="POST">
             @csrf
             @method('PUT')
@@ -13,17 +14,17 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="return_date">Return Date</label>
+                <label for="return_date">Tanggal Pengembalian</label>
                 <input type="date" name="return_date" class="form-control" id="return_date" value="{{ $loan->return_date }}">
             </div>
             <div class="form-group">
                 <label for="status">Status</label>
                 <select name="status" class="form-control" id="status" required>
-                    <option value="borrowed" {{ $loan->status == 'borrowed' ? 'selected' : '' }}>Borrowed</option>
-                    <option value="returned" {{ $loan->status == 'returned' ? 'selected' : '' }}>Returned</option>
+                    <option value="borrowed" {{ $loan->status == 'borrowed' ? 'selected' : '' }}>Dipinjam</option>
+                    <option value="returned" {{ $loan->status == 'returned' ? 'selected' : '' }}>Dikembalikan</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary mt-3">Update Loan</button>
+            <button type="submit" class="btn btn-primary mt-3">Update Peminjaman</button>
         </form>
-    </div>
+    </x-form-card>
 </x-app-layout>

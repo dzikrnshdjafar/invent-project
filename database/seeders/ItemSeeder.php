@@ -33,5 +33,7 @@ class ItemSeeder extends Seeder
             'description' => 'wakwaw',
             'quantity' => '1',
         ]);
+
+        Item::factory()->count(15)->create();
     }
 }

@@ -10,12 +10,12 @@ class RoomController extends Controller
     public function index()
     {
         $rooms = Room::all();
-        return view('rooms.index', compact('rooms'));
+        return view('pages.inner.rooms.index', compact('rooms'));
     }
 
     public function create()
     {
-        return view('rooms.create');
+        return view('pages.inner.rooms.create');
     }
 
     public function store(Request $request)
@@ -31,12 +31,12 @@ class RoomController extends Controller
 
     public function show(Room $room)
     {
-        return view('rooms.show', compact('room'));
+        return view('pages.inner.rooms.show', compact('room'));
     }
 
     public function edit(Room $room)
     {
-        return view('rooms.edit', compact('room'));
+        return view('pages.inner.rooms.edit', compact('room'));
     }
 
     public function update(Request $request, Room $room)

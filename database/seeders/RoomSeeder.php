@@ -24,5 +24,9 @@ class RoomSeeder extends Seeder
         Room::create([
             'name' => 'Gudang 3',
         ]);
+
+        Room::create([
+            'name' => 'Gudang 4',
+        ]);
     }
 }
