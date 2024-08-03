@@ -56,12 +56,12 @@
                         <span>Loans</span>
                     </a>
                 </li>
+
+                <li class="sidebar-title">Profile</li>
                 <li class="sidebar-item">
-                    <a href="route('logout')"
-                    onclick="event.preventDefault();
-                                this.closest('form').submit();" class='sidebar-link'>
+                    <a href="{{ route('profile.edit') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
-                        <span>Keluar</span>
+                        <span>Security</span>
                     </a>
                 </li>
             </ul>

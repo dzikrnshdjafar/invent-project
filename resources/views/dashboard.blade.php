@@ -1,3 +1,4 @@
+<!-- resources/views/dashboard.blade.php -->
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -14,4 +15,12 @@
             </div>
         </div>
     </div>
+
+    <!-- Include bar-chart component -->
+    <x-chart-bar
+        chartTitle="Grafik Jumlah Barang Berdasarkan Ruangan"
+        chartID="chartCommodityCountEachLocation"
+        :series="$charts['commodity_each_location_count']['series']"
+        :categories="$charts['commodity_each_location_count']['categories']"
+    />
 </x-app-layout>

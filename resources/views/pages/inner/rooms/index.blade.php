@@ -1,9 +1,13 @@
-<!-- resources/views/pages/inner/rooms/index.blade.php -->
+
+
 @section('title', 'Ruangan')
+
 <x-app-layout>
     <x-table-card :title="'Daftar Ruangan'">
         <x-slot name="headerActions">
-            <a href="{{ route('rooms.create') }}" class="btn rounded-pill btn-primary mb-0"><i class="bi bi-plus-lg"></i> Tambah Ruangan</a>
+            <a href="{{ route('rooms.create') }}" class="btn rounded-pill btn-primary mb-0">
+                <i class="bi bi-plus-lg"></i> Tambah Ruangan
+            </a>
         </x-slot>
         <x-slot name="tableHeader">
             <tr>
@@ -34,4 +38,40 @@
             @endforeach
         </x-slot>
     </x-table-card>
+
+    <!-- Chart Container -->
+    <div>
+        <canvas id="roomChart"></canvas>
+    </div>
 </x-app-layout>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ctx = document.getElementById('roomChart').getContext('2d');
+        var rooms = @json($rooms);
+        var labels = rooms.map(room => room.name);
+        var data = rooms.map(room => room.total_quantity);
+
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Quantity of Items',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>

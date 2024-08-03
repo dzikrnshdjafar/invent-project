@@ -63,8 +63,9 @@
             <div class="page-heading d-flex align-items-center">
                 <h3>@yield('title', 'Dashboard')</h3>
                 <div class="dropdown ms-auto">
+                    Hello,
                     <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ Auth::user()->name }}
+                         {{ Auth::user()->name }}
                     </button>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                         <div class="px-4 py-2">
@@ -93,8 +94,11 @@
     <script src="{{ asset('mzr') }}/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="{{ asset('mzr') }}/assets/compiled/js/app.js"></script>
     <!-- Need: Apexcharts -->
-    <script src="{{ asset('mzr') }}/assets/extensions/apexcharts/apexcharts.min.js"></script>
-    <script src="{{ asset('mzr') }}/assets/static/js/pages/dashboard.js"></script>
+    {{-- <script src="{{ asset('mzr') }}/assets/extensions/apexcharts/apexcharts.min.js"></script>
+    <script src="{{ asset('mzr') }}/assets/static/js/pages/dashboard.js"></script> --}}
+{{-- 
+    <script src="{{ asset('mzr') }}/assets/extensions/chart.js/chart.umd.js"></script>
+    <script src="{{ asset('mzr') }}/assets/static/js/pages/ui-chartjs.js"></script> --}}
 
     {{-- <script src="{{ asset('mzr') }}/assets/extensions/simple-datatables/umd/simple-datatables.js"></script>
     <script src="{{ asset('mzr') }}/assets/static/js/pages/simple-datatables.js"></script> --}}

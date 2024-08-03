@@ -25,7 +25,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             $('#table1').DataTable({
-                "pageLength": 5
+                "iDisplayLength": 5
             });
         });
     </script>

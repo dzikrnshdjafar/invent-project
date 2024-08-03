@@ -9,7 +9,13 @@ class RoomController extends Controller
 {
     public function index()
     {
-        $rooms = Room::all();
+        $rooms = Room::with('items')->get();
+
+        // Add total quantity for each room
+        foreach ($rooms as $room) {
+            $room->total_quantity = $room->items->sum('quantity');
+        }
+
         return view('pages.inner.rooms.index', compact('rooms'));
     }
 
