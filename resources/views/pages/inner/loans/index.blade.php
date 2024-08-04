@@ -50,13 +50,14 @@
                             @method('DELETE')
                             <button type="submit" class="btn rounded-pill btn-light-danger"><i class="bi bi-x"></i></button>
                         </form>
+                        @can('Manage Quantities')
+                            @if($loan->status == 'borrowed')
+                                <a href="{{ route('loans.manageQuantities', $loan->id) }}" class="btn rounded-pill btn-primary">Manage Quantities</a>
+                            @endif
+                        @endcan
                         @can('Return Items')
                             @if($loan->status == 'borrowed')
-                                <form action="{{ route('loans.returnItem', $loan->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('PUT')
-                                    <button type="submit" class="btn rounded-pill btn-success">Return</button>
-                                </form>
+                                <a href="{{ route('loans.returnItemsForm', $loan->id) }}" class="btn rounded-pill btn-success">Return Items</a>
                             @endif
                         @endcan
                     </td>

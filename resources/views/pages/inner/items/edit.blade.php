@@ -1,3 +1,4 @@
+<!-- resources/views/pages/inner/items/edit.blade.php -->
 @section('title', 'Ubah Barang')
 
 <x-app-layout>
@@ -13,19 +14,50 @@
                 <label for="description">Description</label>
                 <textarea name="description" class="form-control" id="description">{{ $item->description }}</textarea>
             </div>
+
             <div class="form-group">
-                <label for="quantity">Quantity</label>
-                <input type="number" name="quantity" class="form-control" id="quantity" value="{{ $item->quantity }}" required>
-            </div>
-            <div class="form-group">
-                <label for="room_id">Room</label>
-                <select name="room_id" class="form-control" id="room_id" required>
-                    @foreach ($rooms as $room)
-                        <option value="{{ $room->id }}" {{ $item->room_id == $room->id ? 'selected' : '' }}>{{ $room->name }}</option>
+                <label>Rooms and Quantities</label>
+                <div id="rooms-wrapper">
+                    @foreach ($rooms as $index => $room)
+                        <div class="room-quantity-group">
+                            <div class="form-check">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input form-check-primary room-checkbox" 
+                                           name="rooms[{{ $index }}][room_id]" 
+                                           id="roomCheck{{ $room->id }}" 
+                                           value="{{ $room->id }}" 
+                                           {{ $item->rooms->contains($room->id) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="roomCheck{{ $room->id }}">{{ $room->name }}</label>
+                                </div>
+                            </div>
+                            <input type="number" name="rooms[{{ $index }}][quantity]" class="form-control quantity-input" 
+                                   placeholder="Quantity" id="quantityInput{{ $room->id }}" 
+                                   style="display: {{ $item->rooms->contains($room->id) ? 'block' : 'none' }};" 
+                                   value="{{ $item->rooms->find($room->id)->pivot->quantity ?? '' }}" 
+                                   {{ $item->rooms->contains($room->id) ? '' : 'disabled' }}>
+                        </div>
                     @endforeach
-                </select>
+                </div>
             </div>
+
             <button type="submit" class="btn btn-primary mt-3">Update Item</button>
         </form>
     </x-form-card>
+
+    <script>
+        document.querySelectorAll('.room-checkbox').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                var quantityInput = document.getElementById('quantityInput' + this.value);
+                if (this.checked) {
+                    quantityInput.style.display = 'block';
+                    quantityInput.disabled = false;
+                    quantityInput.required = true;
+                } else {
+                    quantityInput.style.display = 'none';
+                    quantityInput.disabled = true;
+                    quantityInput.required = false;
+                }
+            });
+        });
+    </script>
 </x-app-layout>

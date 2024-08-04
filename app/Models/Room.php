@@ -13,6 +13,6 @@ class Room extends Model
 
     public function items()
     {
-        return $this->hasMany(Item::class);
+        return $this->belongsToMany(Item::class)->withPivot('quantity');
     }
 }

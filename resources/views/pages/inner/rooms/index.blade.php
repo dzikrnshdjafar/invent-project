@@ -40,38 +40,37 @@
     </x-table-card>
 
     <!-- Chart Container -->
-    <div>
-        <canvas id="roomChart"></canvas>
-    </div>
+    <div id="roomChart"></div>
 </x-app-layout>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var ctx = document.getElementById('roomChart').getContext('2d');
         var rooms = @json($rooms);
-        var labels = rooms.map(room => room.name);
-        var data = rooms.map(room => room.total_quantity);
 
-        var chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Total Quantity of Items',
-                    data: data,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
+        var seriesData = rooms.map(room => ({
+            name: room.name,
+            data: room.items.map(item => item.quantity)
+        }));
+
+        var labels = rooms.length > 0 ? rooms[0].items.map(item => item.name) : [];
+
+        var options = {
+            chart: {
+                type: 'bar'
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+            series: seriesData,
+            xaxis: {
+                categories: labels
+            },
+            colors: rooms.map((_, index) => {
+                // Generate different colors for each room
+                var colors = ['#1E90FF', '#FF6347', '#32CD32', '#FFD700', '#8A2BE2', '#FF4500'];
+                return colors[index % colors.length];
+            })
+        };
+
+        var chart = new ApexCharts(document.querySelector("#roomChart"), options);
+        chart.render();
     });
 </script>

@@ -34,6 +34,7 @@ class RoleSeeder extends Seeder
         $editLoansPermission = Permission::where('name', 'Edit Loans')->first();
         $deleteLoansPermission = Permission::where('name', 'Delete Loans')->first();
         $returnItemsPermission = Permission::where('name', 'Return Items')->first();
+        $manageQuantitiesPermission = Permission::where('name', 'Manage Quantities')->first();
 
         if ($crudItemsPermission) {
             $adminRole->givePermissionTo($crudItemsPermission);
@@ -57,6 +58,9 @@ class RoleSeeder extends Seeder
             $pengelolaRole->givePermissionTo($deleteLoansPermission);
         }
 
+        if ($manageQuantitiesPermission) {
+            $adminRole->givePermissionTo($manageQuantitiesPermission);
+        }
         if ($returnItemsPermission) {
             $adminRole->givePermissionTo($returnItemsPermission);
         }

@@ -6,7 +6,7 @@
             <div class="row d-flex justify-content-center">
                 <x-statistics.info-card 
                     :title="'Barang Tersedia'" 
-                    :value="$availableItems" 
+                    :value="$totalItems" 
                     :iconColor="'green'" 
                     :iconClass="'fas fa-boxes'" 
                 />
@@ -25,6 +25,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+            @if (session('error'))
+                <div class="alert alert-light-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <x-table-card :title="'Daftar Barang'">
                 <x-slot name="headerActions">
                     <a href="{{ route('items.create') }}" class="btn rounded-pill btn-primary mb-0"><i class="bi bi-plus-lg"></i> Tambah Barang</a>
@@ -33,7 +39,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
-                        <th>Quantity</th>
+                        <th>Rooms & Quantities</th>
                         <th>Actions</th>
                     </tr>
                 </x-slot>
@@ -42,7 +48,11 @@
                         <tr>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->description }}</td>
-                            <td>{{ $item->quantity }}</td>
+                            <td>
+                                @foreach ($item->rooms as $room)
+                                    <div>{{ $room->name }}: {{ $room->pivot->quantity }}</div>
+                                @endforeach
+                            </td>
                             <td>
                                 <!-- Trigger for Detail Modal -->
                                 <button type="button" class="btn rounded-pill btn-light-info" data-bs-toggle="modal" data-bs-target="#itemModal{{ $item->id }}">

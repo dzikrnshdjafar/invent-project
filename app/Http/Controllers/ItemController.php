@@ -11,13 +11,24 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $items = Item::all();
-        $totalItems = Item::sum('quantity');
-        $borrowedItems = Loan::where('status', 'borrowed')->sum('quantity');
-        $availableItems = $totalItems - $borrowedItems;
+        // Ambil semua item beserta relasinya
+        $items = Item::with('rooms')->get();
 
-        return view('pages.inner.items.index', compact('items', 'totalItems', 'borrowedItems', 'availableItems'));
+        // Hitung total jumlah semua item dari tabel pivot
+        $totalItems = Item::with('rooms')
+            ->get()
+            ->sum(function ($item) {
+                return $item->rooms->sum('pivot.quantity');
+            });
+
+        // Hitung jumlah item yang dipinjam dari tabel loans
+        $borrowedItems = Loan::where('status', 'borrowed')->sum('quantity');
+
+        return view('pages.inner.items.index', compact('items', 'totalItems', 'borrowedItems'));
     }
+
+
+
 
     public function create()
     {
@@ -27,22 +38,41 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
+        // Validate the request
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string',
             'description' => 'nullable|string',
-            'quantity' => 'required|integer',
-            'room_id' => 'required|exists:rooms,id',
+            'rooms' => 'required|array',
+            'rooms.*.room_id' => 'required|exists:rooms,id',
+            'rooms.*.quantity' => 'required|integer|min:1',
         ]);
 
-        Item::create($request->all());
+        // Create the item
+        $item = Item::create([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        // Attach the rooms with quantities
+        foreach ($request->rooms as $room) {
+            // Ensure only valid rooms with quantities are attached
+            if (!empty($room['room_id']) && !empty($room['quantity'])) {
+                $item->rooms()->attach($room['room_id'], ['quantity' => $room['quantity']]);
+            }
+        }
 
         return redirect()->route('items.index')->with('success', 'Item created successfully.');
     }
 
+
+
     public function show(Item $item)
     {
+        $item->load('rooms'); // Memuat relasi rooms
+
         return view('pages.inner.items.show', compact('item'));
     }
+
 
     public function edit(Item $item)
     {
@@ -54,20 +84,70 @@ class ItemController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'quantity' => 'required|integer',
-            'room_id' => 'required|exists:rooms,id',
+            'rooms' => 'required|array',
+            'rooms.*.room_id' => 'required|exists:rooms,id',
+            'rooms.*.quantity' => 'required|integer|min:1',
         ]);
 
-        $item->update($request->all());
+        // Update item details
+        $item->update([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        // Detach all rooms
+        $item->rooms()->detach();
+
+        // Attach rooms with quantities
+        foreach ($request->rooms as $room) {
+            if (!empty($room['room_id']) && !empty($room['quantity'])) {
+                $item->rooms()->attach($room['room_id'], ['quantity' => $room['quantity']]);
+            }
+        }
 
         return redirect()->route('items.index')->with('success', 'Item updated successfully.');
     }
 
+
     public function destroy(Item $item)
     {
-        $item->delete();
+        // Periksa apakah ada pinjaman dengan status 'borrowed' untuk item ini
+        $loanExists = Loan::where('item_id', $item->id)
+            ->where('status', 'borrowed')
+            ->exists();
 
-        return redirect()->route('items.index')
-            ->with('success', 'Item deleted successfully.');
+        if ($loanExists) {
+            return redirect()->route('items.index')->with('error', 'Item cannot be deleted because it is currently borrowed.');
+        }
+
+        // Periksa apakah ada pinjaman dengan status 'returned' untuk item ini
+        $returnedLoans = Loan::where('item_id', $item->id)
+            ->where('status', 'returned')
+            ->count();
+
+        if ($returnedLoans > 0) {
+            // Lakukan soft delete
+            $item->delete();
+            return redirect()->route('items.index')->with('success', 'Item has been soft deleted.');
+        }
+
+        // Hapus item secara permanen jika tidak ada pinjaman terkait
+        $item->forceDelete();
+        return redirect()->route('items.index')->with('success', 'Item has been permanently deleted.');
+    }
+
+
+    public function getRooms($itemId)
+    {
+        $item = Item::with('rooms')->findOrFail($itemId);
+        $rooms = $item->rooms->map(function ($room) {
+            return [
+                'id' => $room->id,
+                'name' => $room->name,
+                'quantity' => $room->pivot->quantity,
+            ];
+        });
+
+        return response()->json($rooms);
     }
 }

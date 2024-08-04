@@ -1,11 +1,14 @@
-<!-- resources/views/pages/inner/items/show.blade.php -->
 @props(['item'])
 
 <x-detail-modal :modalId="'itemModal'.$item->id" :modalTitle="$item->name">
     <x-slot name="slot">
         <p><strong>Description: </strong>{{ $item->description }}</p>
-        <p><strong>Quantity: </strong>{{ $item->quantity }}</p>
-        <p><strong>Room: </strong>{{ $item->room->name }}</p>
+        <p><strong>Rooms and Quantities: </strong></p>
+        <ul>
+            @foreach ($item->rooms as $room)
+                <li>{{ $room->name }}: {{ $room->pivot->quantity }}</li>
+            @endforeach
+        </ul>
     </x-slot>
     <x-slot name="footer">
         <a href="{{ route('items.edit', $item->id) }}" class="btn btn-warning">Edit</a>

@@ -15,6 +15,7 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'Create Loans']);
         Permission::create(['name' => 'Edit Loans']);
         Permission::create(['name' => 'Delete Loans']);
+        Permission::create(['name' => 'Manage Quantities']);
         Permission::create(['name' => 'Return Items']);
     }
 }

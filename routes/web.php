@@ -24,7 +24,18 @@ Route::middleware('auth')->group(function () {
     Route::resource('rooms', RoomController::class)->middleware('role:Admin|Pengelola');
 
     Route::resource('loans', LoanController::class);
-    Route::put('loans/{loan}/return', [LoanController::class, 'returnItem'])->name('loans.returnItem')->middleware('role:Admin');
+    // Route::put('loans/{loan}/return', [LoanController::class, 'returnItem'])->name('loans.returnItem')->middleware('role:Admin');
+    Route::get('items/{item}/rooms', [ItemController::class, 'getRooms']);
+
+    // web.php
+
+    Route::get('loans/{loan}/manage-quantities', [LoanController::class, 'manageQuantities'])->name('loans.manageQuantities');
+    Route::put('loans/{loan}/update-quantities', [LoanController::class, 'updateQuantities'])->name('loans.updateQuantities');
+
+    // web.php
+
+    Route::put('/loans/{loan}/return-items', [LoanController::class, 'returnItems'])->name('loans.returnItems');
+    Route::get('/loans/{loan}/return-items', [LoanController::class, 'returnItemsForm'])->name('loans.returnItemsForm');
 });
 
 
