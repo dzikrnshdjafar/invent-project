@@ -94,14 +94,8 @@
     <script src="{{ asset('mzr') }}/assets/static/js/components/dark.js"></script>
     <script src="{{ asset('mzr') }}/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="{{ asset('mzr') }}/assets/compiled/js/app.js"></script>
+    
     <!-- Need: Apexcharts -->
-    <script src="{{ asset('mzr') }}/assets/extensions/apexcharts/apexcharts.min.js"></script>
-    {{-- <script src="{{ asset('mzr') }}/assets/static/js/pages/dashboard.js"></script> --}}
-{{-- 
-    <script src="{{ asset('mzr') }}/assets/extensions/chart.js/chart.umd.js"></script>
-    <script src="{{ asset('mzr') }}/assets/static/js/pages/ui-chartjs.js"></script> --}}
-
-    {{-- <script src="{{ asset('mzr') }}/assets/extensions/simple-datatables/umd/simple-datatables.js"></script>
-    <script src="{{ asset('mzr') }}/assets/static/js/pages/simple-datatables.js"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </body>
 </html>

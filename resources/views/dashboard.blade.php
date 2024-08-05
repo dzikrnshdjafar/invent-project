@@ -7,31 +7,29 @@
     </x-slot>
 
     <div class="row">
+        <!-- Info cards here -->
         <x-statistics.info-card 
             :title="'Total Items'" 
             :value="$totalItems" 
-            :iconColor="'green'" 
+            :iconColor="'purple'" 
             :iconClass="'fas fa-boxes'" 
         />
-
         <x-statistics.info-card 
             :title="'Total Rooms'" 
             :value="$totalRooms" 
             :iconColor="'blue'" 
             :iconClass="'fas fa-door-open'" 
         />
-
         <x-statistics.info-card 
             :title="'Total Loans'" 
             :value="$totalLoans" 
-            :iconColor="'orange'" 
+            :iconColor="'red'" 
             :iconClass="'fas fa-handshake'" 
         />
-
         <x-statistics.info-card 
             :title="'Pending Loans'" 
             :value="$pendingLoansCount" 
-            :iconColor="'red'" 
+            :iconColor="'green'" 
             :iconClass="'fas fa-hourglass-half'" 
         />
     </div>
@@ -41,7 +39,7 @@
         <x-chart-bar
             chartID="chartItemsEachRoomsCount"
             :series="$charts['items_each_rooms_count']['series']"
-            :categories="$charts['items_each_rooms_count']['categories']"
+            :labels="$charts['items_each_rooms_count']['labels']"
             :colors="$charts['items_each_rooms_count']['colors']"
         />
     </x-statistics.chart-card>

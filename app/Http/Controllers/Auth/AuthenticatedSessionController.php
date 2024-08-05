@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use \App\Models\User;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -28,7 +29,16 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // Check the role of the authenticated user
+        $user = Auth::user();
+        if ($user->hasRole('Admin')) {
+            return redirect()->intended(route('dashboard'));
+        } else if ($user->hasRole('Peminjam')) {
+            return redirect()->intended(route('loans.index'));
+        }
+
+        // Default redirect (optional, or remove this if not needed)
+        return redirect()->intended(route('dashboard'));
     }
 
     /**

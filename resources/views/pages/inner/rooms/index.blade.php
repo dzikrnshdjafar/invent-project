@@ -38,39 +38,4 @@
             @endforeach
         </x-slot>
     </x-table-card>
-
-    <!-- Chart Container -->
-    <div id="roomChart"></div>
-</x-app-layout>
-
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var rooms = @json($rooms);
-
-        var seriesData = rooms.map(room => ({
-            name: room.name,
-            data: room.items.map(item => item.quantity)
-        }));
-
-        var labels = rooms.length > 0 ? rooms[0].items.map(item => item.name) : [];
-
-        var options = {
-            chart: {
-                type: 'bar'
-            },
-            series: seriesData,
-            xaxis: {
-                categories: labels
-            },
-            colors: rooms.map((_, index) => {
-                // Generate different colors for each room
-                var colors = ['#1E90FF', '#FF6347', '#32CD32', '#FFD700', '#8A2BE2', '#FF4500'];
-                return colors[index % colors.length];
-            })
-        };
-
-        var chart = new ApexCharts(document.querySelector("#roomChart"), options);
-        chart.render();
-    });
-</script>
+    </x-app-layout>

@@ -14,9 +14,11 @@
     @endif
 
     <x-table-card :title="'Daftar Peminjaman'">
+        @can('Create Loans')
         <x-slot name="headerActions">
             <a href="{{ route('loans.create') }}" class="btn rounded-pill btn-primary mb-0"><i class="bi bi-plus-lg"></i> Buat Peminjaman</a>
         </x-slot>
+        @endcan
         <x-slot name="tableHeader">
             <tr>
                 <th>ID</th>
@@ -27,6 +29,7 @@
                 <th>Loan Date</th>
                 <th>Return Date</th>
                 <th>Duration (days)</th>
+                <th>Quantities</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
@@ -42,6 +45,7 @@
                     <td>{{ $loan->created_at }}</td>
                     <td>{{ $loan->return_date ?? 'Not returned yet' }}</td>
                     <td>{{ $loan->loan_duration }}</td>
+                    <td>{{ $loan->quantity }}</td>
                     <td>
                         @if($loan->status == 'borrowed')
                             <span class="badge bg-light-warning">Borrowed</span>
@@ -56,12 +60,16 @@
                         <button type="button" class="btn rounded-pill btn-light-info" data-bs-toggle="modal" data-bs-target="#loanModal{{ $loan->id }}">
                             <i class="bi bi-info-circle"></i>
                         </button>
+                        @can('Edit Loans')
                         <a href="{{ route('loans.edit', $loan->id) }}" class="btn rounded-pill btn-light-warning"><i class="bi bi-pencil"></i></a>
+                        @endcan
+                        @can('Delete Loans')
                         <form action="{{ route('loans.destroy', $loan->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn rounded-pill btn-light-danger" onclick="return confirm('Are you sure you want to delete this loan?')"><i class="bi bi-x"></i></button>
                         </form>
+                        @endcan
                         @can('Manage Quantities')
                             @if($loan->status == 'pending')
                                 <a href="{{ route('loans.manageQuantities', $loan->id) }}" class="btn rounded-pill btn-primary">Manage Quantities</a>

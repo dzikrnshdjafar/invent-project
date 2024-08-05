@@ -7,6 +7,7 @@
         <p><strong>Item:</strong> {{ $loan->item->name }}</p>
         <p><strong>User:</strong> {{ $loan->user->name }}</p>
         <p><strong>Return Date:</strong> {{ $loan->return_date ?? 'Not returned yet' }}</p>
+        <p><strong>Quantities:</strong> {{ $loan->quantity }}</p>
         <p><strong>Status:</strong> {{ $loan->status }}</p>
     </x-slot>
     <x-slot name="footer">
