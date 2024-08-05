@@ -1,4 +1,3 @@
-<!-- resources/views/pages/inner/loans/manage-quantities.blade.php -->
 @section('title', 'Manage Quantities')
 
 <x-app-layout>
@@ -24,6 +23,14 @@
             @csrf
             @method('PUT')
             <div class="form-group">
+                <div class="text-center mb-2">
+                    <h5>Loan Quantities</h5>
+                    <h1>
+                        <span id="loan-quantities-badge" class="badge bg-light-danger">
+                            {{ $loanQuantities }}
+                        </span>
+                    </h1>
+                </div>
                 <label>Rooms and Quantities</label>
                 <div id="rooms-wrapper">
                     @foreach ($rooms as $index => $room)
@@ -32,7 +39,7 @@
                         @endphp
                         <div class="room-quantity-group mb-2">
                             <label>{{ $room->name }} (Available: {{ $availableQuantity }})</label>
-                            <input type="number" name="quantities[{{ $index }}][quantity]" class="form-control" placeholder="Quantity" required max="{{ $availableQuantity }}">
+                            <input type="number" name="quantities[{{ $index }}][quantity]" class="form-control room-quantity-input" placeholder="Quantity" max="{{ $availableQuantity }}" oninput="checkQuantities()">
                             <input type="hidden" name="quantities[{{ $index }}][room_id]" value="{{ $room->id }}">
                         </div>
                     @endforeach
@@ -42,3 +49,25 @@
         </form>
     </x-form-card>
 </x-app-layout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        window.checkQuantities = function () {
+            let loanQuantities = parseInt('{{ $loanQuantities }}');
+            let totalInputQuantity = 0;
+
+            document.querySelectorAll('.room-quantity-input').forEach(function (input) {
+                totalInputQuantity += parseInt(input.value) || 0;
+            });
+
+            let badge = document.getElementById('loan-quantities-badge');
+            if (totalInputQuantity === loanQuantities) {
+                badge.classList.remove('bg-light-danger');
+                badge.classList.add('bg-success');
+            } else {
+                badge.classList.remove('bg-success');
+                badge.classList.add('bg-light-danger');
+            }
+        };
+    });
+</script>

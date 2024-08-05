@@ -34,6 +34,6 @@ class ItemSeeder extends Seeder
         //     'quantity' => '1',
         // ]);
 
-        // Item::factory()->count(15)->create();
+        Item::factory()->count(40)->create();
     }
 }

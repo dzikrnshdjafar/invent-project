@@ -32,32 +32,40 @@
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
+
                 <li class="sidebar-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
+
                 <li class="sidebar-item {{ request()->routeIs('items.*') ? 'active' : '' }}">
                     <a href="{{ route('items.index') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Items</span>
                     </a>
                 </li>
+
                 <li class="sidebar-item {{ request()->routeIs('rooms.*') ? 'active' : '' }}">
                     <a href="{{ route('rooms.index') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Rooms</span>
                     </a>
                 </li>
+
                 <li class="sidebar-item {{ request()->routeIs('loans.*') ? 'active' : '' }}">
                     <a href="{{ route('loans.index') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Loans</span>
+                        @if(isset($pendingLoansCount) && $pendingLoansCount > 0)
+                            <span class="badge bg-light-secondary">{{ $pendingLoansCount }}</span>
+                        @endif
                     </a>
                 </li>
 
                 <li class="sidebar-title">Profile</li>
+
                 <li class="sidebar-item">
                     <a href="{{ route('profile.edit') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>

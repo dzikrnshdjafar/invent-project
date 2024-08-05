@@ -52,7 +52,8 @@
 <body>
     <script src="{{ asset('mzr') }}/assets/static/js/initTheme.js"></script>
     <div id="app">
-        @include('layouts.sidebar')
+        @include('layouts.sidebar', ['pendingLoansCount' => $pendingLoansCount ?? 0])
+
         <div id="main">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
@@ -94,8 +95,8 @@
     <script src="{{ asset('mzr') }}/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="{{ asset('mzr') }}/assets/compiled/js/app.js"></script>
     <!-- Need: Apexcharts -->
-    {{-- <script src="{{ asset('mzr') }}/assets/extensions/apexcharts/apexcharts.min.js"></script>
-    <script src="{{ asset('mzr') }}/assets/static/js/pages/dashboard.js"></script> --}}
+    <script src="{{ asset('mzr') }}/assets/extensions/apexcharts/apexcharts.min.js"></script>
+    {{-- <script src="{{ asset('mzr') }}/assets/static/js/pages/dashboard.js"></script> --}}
 {{-- 
     <script src="{{ asset('mzr') }}/assets/extensions/chart.js/chart.umd.js"></script>
     <script src="{{ asset('mzr') }}/assets/static/js/pages/ui-chartjs.js"></script> --}}

@@ -1,6 +1,18 @@
-<!-- resources/views/pages/inner/loans/index.blade.php -->
 @section('title', 'Peminjaman')
 <x-app-layout>
+    <!-- Alert section -->
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @elseif (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <x-table-card :title="'Daftar Peminjaman'">
         <x-slot name="headerActions">
             <a href="{{ route('loans.create') }}" class="btn rounded-pill btn-primary mb-0"><i class="bi bi-plus-lg"></i> Buat Peminjaman</a>
@@ -48,10 +60,10 @@
                         <form action="{{ route('loans.destroy', $loan->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn rounded-pill btn-light-danger"><i class="bi bi-x"></i></button>
+                            <button type="submit" class="btn rounded-pill btn-light-danger" onclick="return confirm('Are you sure you want to delete this loan?')"><i class="bi bi-x"></i></button>
                         </form>
                         @can('Manage Quantities')
-                            @if($loan->status == 'borrowed')
+                            @if($loan->status == 'pending')
                                 <a href="{{ route('loans.manageQuantities', $loan->id) }}" class="btn rounded-pill btn-primary">Manage Quantities</a>
                             @endif
                         @endcan

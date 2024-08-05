@@ -112,6 +112,15 @@ class ItemController extends Controller
     public function destroy(Item $item)
     {
         // Periksa apakah ada pinjaman dengan status 'borrowed' untuk item ini
+        $pendingCheck = Loan::where('item_id', $item->id)
+            ->where('status', 'pending')
+            ->exists();
+
+        if ($pendingCheck) {
+            return redirect()->route('items.index')->with('error', 'The item cannot be deleted because it has a loan request.');
+        }
+
+        // Periksa apakah ada pinjaman dengan status 'borrowed' untuk item ini
         $loanExists = Loan::where('item_id', $item->id)
             ->where('status', 'borrowed')
             ->exists();

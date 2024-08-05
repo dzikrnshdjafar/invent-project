@@ -6,21 +6,43 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
+    <div class="row">
+        <x-statistics.info-card 
+            :title="'Total Items'" 
+            :value="$totalItems" 
+            :iconColor="'green'" 
+            :iconClass="'fas fa-boxes'" 
+        />
+
+        <x-statistics.info-card 
+            :title="'Total Rooms'" 
+            :value="$totalRooms" 
+            :iconColor="'blue'" 
+            :iconClass="'fas fa-door-open'" 
+        />
+
+        <x-statistics.info-card 
+            :title="'Total Loans'" 
+            :value="$totalLoans" 
+            :iconColor="'orange'" 
+            :iconClass="'fas fa-handshake'" 
+        />
+
+        <x-statistics.info-card 
+            :title="'Pending Loans'" 
+            :value="$pendingLoansCount" 
+            :iconColor="'red'" 
+            :iconClass="'fas fa-hourglass-half'" 
+        />
     </div>
 
-    <!-- Include bar-chart component -->
-    <x-chart-bar
-        chartTitle="Grafik Jumlah Barang Berdasarkan Ruangan"
-        chartID="chartCommodityCountEachLocation"
-        :series="$charts['commodity_each_location_count']['series']"
-        :categories="$charts['commodity_each_location_count']['categories']"
-    />
+    <!-- Include chart-card component wrapping chart-bar component -->
+    <x-statistics.chart-card title="Grafik Jumlah Barang Berdasarkan Ruangan">
+        <x-chart-bar
+            chartID="chartItemsEachRoomsCount"
+            :series="$charts['items_each_rooms_count']['series']"
+            :categories="$charts['items_each_rooms_count']['categories']"
+            :colors="$charts['items_each_rooms_count']['colors']"
+        />
+    </x-statistics.chart-card>
 </x-app-layout>

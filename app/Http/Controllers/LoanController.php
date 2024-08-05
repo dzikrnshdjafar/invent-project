@@ -29,9 +29,10 @@ class LoanController extends Controller
                 ->get();
         }
 
-        return view('pages.inner.loans.index', compact('loans'));
-    }
+        $pendingLoansCount = Loan::where('status', 'pending')->count();
 
+        return view('pages.inner.loans.index', compact('loans', 'pendingLoansCount'));
+    }
 
     public function create()
     {
@@ -71,7 +72,7 @@ class LoanController extends Controller
             'user_id' => auth()->id(),
             'loan_duration' => $request->loan_duration,
             'quantity' => $request->quantity,
-            'status' => 'borrowed',
+            'status' => 'pending',
         ]);
 
         // Ensure loan_duration is an integer
@@ -82,7 +83,6 @@ class LoanController extends Controller
 
         return redirect()->route('loans.index')->with('success', 'Loan created successfully.');
     }
-
 
     public function show(Loan $loan)
     {
@@ -108,7 +108,7 @@ class LoanController extends Controller
         $request->validate([
             'item_id' => 'required|exists:items,id',
             'loan_duration' => 'nullable|integer|min:1',
-            'status' => 'required|in:borrowed,returned',
+            'status' => 'required|in:pending,borrowed,returned',
         ]);
 
         $loan->update($request->all());
@@ -118,17 +118,18 @@ class LoanController extends Controller
 
     public function destroy(Loan $loan)
     {
+        // Cek apakah pengguna memiliki izin untuk menghapus pinjaman
         if (Gate::denies('Delete Loans')) {
             abort(403);
         }
 
-        $loan->delete();
-
-        // Kembalikan kuantitas item ke tabel pivot item_room
-        foreach ($loan->item->rooms as $room) {
-            $room->pivot->quantity += $loan->quantity;
-            $room->pivot->save();
+        // Cek apakah status pinjaman masih 'borrowed'
+        if ($loan->status == 'borrowed') {
+            return redirect()->route('loans.index')->with('error', 'Loan cannot be deleted while it is still borrowed.');
         }
+
+        // Lakukan penghapusan pinjaman
+        $loan->delete();
 
         // Periksa apakah semua pinjaman untuk item ini telah dihapus
         $remainingLoans = Loan::where('item_id', $loan->item_id)->count();
@@ -144,23 +145,29 @@ class LoanController extends Controller
         return redirect()->route('loans.index')->with('success', 'Loan deleted successfully.');
     }
 
+
     public function manageQuantities(Loan $loan)
     {
         $rooms = Room::whereHas('items', function ($query) use ($loan) {
             $query->where('item_id', $loan->item_id);
         })->get();
 
-        return view('pages.inner.loans.manage-quantities', compact('loan', 'rooms'));
+        // Ambil data loan_quantity dari tabel loans
+        $loanQuantities = $loan->quantity;
+
+
+        return view('pages.inner.loans.manage-quantities', compact('loan', 'rooms', 'loanQuantities'));
     }
 
-    // LoanController.php
+
+
 
     public function updateQuantities(Request $request, Loan $loan)
     {
         $request->validate([
             'quantities' => 'required|array',
             'quantities.*.room_id' => 'required|exists:rooms,id',
-            'quantities.*.quantity' => 'required|integer|min:1',
+            'quantities.*.quantity' => 'nullable|integer|min:0',
         ]);
 
         $totalQuantity = array_sum(array_column($request->quantities, 'quantity'));
@@ -172,15 +179,20 @@ class LoanController extends Controller
         // Update item_room quantities
         DB::transaction(function () use ($request, $loan) {
             foreach ($request->quantities as $quantityData) {
-                $room = Room::find($quantityData['room_id']);
-                $room->items()->updateExistingPivot($loan->item_id, [
-                    'quantity' => DB::raw('quantity - ' . $quantityData['quantity'])
-                ]);
+                if (isset($quantityData['quantity'])) {
+                    $room = Room::find($quantityData['room_id']);
+                    $room->items()->updateExistingPivot($loan->item_id, [
+                        'quantity' => DB::raw('quantity - ' . $quantityData['quantity'])
+                    ]);
+                }
             }
+
+            $loan->update(['status' => 'borrowed']);
         });
 
         return redirect()->route('loans.index')->with('success', 'Quantities successfully updated.');
     }
+
 
     public function returnItems(Request $request, Loan $loan)
     {
@@ -191,10 +203,13 @@ class LoanController extends Controller
         $request->validate([
             'quantities' => 'required|array',
             'quantities.*.room_id' => 'required|exists:rooms,id',
-            'quantities.*.quantity' => 'required|integer|min:1',
+            'quantities.*.quantity' => 'nullable|integer|min:0',
         ]);
 
-        $totalReturnQuantity = array_sum(array_column($request->quantities, 'quantity'));
+        $totalReturnQuantity = 0;
+        foreach ($request->quantities as $quantityData) {
+            $totalReturnQuantity += isset($quantityData['quantity']) ? (int)$quantityData['quantity'] : 0;
+        }
 
         // Check if the total returned quantity matches the loaned quantity
         if ($totalReturnQuantity != $loan->quantity) {
@@ -203,10 +218,12 @@ class LoanController extends Controller
 
         DB::transaction(function () use ($request, $loan) {
             foreach ($request->quantities as $quantityData) {
-                $room = Room::find($quantityData['room_id']);
-                $room->items()->updateExistingPivot($loan->item_id, [
-                    'quantity' => DB::raw('quantity + ' . $quantityData['quantity'])
-                ]);
+                if (isset($quantityData['quantity'])) {
+                    $room = Room::find($quantityData['room_id']);
+                    $room->items()->updateExistingPivot($loan->item_id, [
+                        'quantity' => DB::raw('quantity + ' . $quantityData['quantity'])
+                    ]);
+                }
             }
 
             $loan->update(['status' => 'returned']);
@@ -227,6 +244,10 @@ class LoanController extends Controller
             $query->where('item_id', $loan->item_id);
         })->get();
 
-        return view('pages.inner.loans.return-items', compact('loan', 'rooms'));
+        // Ambil data loan_quantity dari tabel loans
+        $loanQuantities = $loan->quantity;
+
+
+        return view('pages.inner.loans.return-items', compact('loan', 'rooms', 'loanQuantities'));
     }
 }

@@ -1,66 +1,39 @@
-<!-- resources/views/components/bar-chart.blade.php -->
-<div>
-    <div class="card">
-        <div class="card-header">
-            <h4>{{ $chartTitle }}</h4>
-        </div>
-        <div class="card-body">
-            <div id="{{ $chartID }}"></div>
-        </div>
-    </div>
-</div>
+<!-- resources/views/components/chart-bar.blade.php -->
+@props([
+    'chartID',
+    'series',
+    'categories',
+    'colors',
+])
 
-@push('js')
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<div id="{{ $chartID }}" style="height: 400px;"></div>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const chartID = "#{{ $chartID }}";
-        const categories = @json($categories);  // Room names
-        const series = @json($series);          // Total quantities for each room
-
-        // Generate a unique color for each bar
-        function generateRandomColor() {
-            var letters = '0123456789ABCDEF';
-            var color = '#';
-            for (var i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
-
-        // Use generated colors for each series item
-        const colors = series.map(() => generateRandomColor());
-
-        let options = {
+    document.addEventListener('DOMContentLoaded', function () {
+        var options = {
+            series: @json($series),
             chart: {
-                height: 350,
-                type: "bar",
+                type: 'bar',
+                height: 400
             },
-            plotOptions: {
-                bar: {
-                    distributed: true,
-                }
-            },
-            series: [
-                {
-                    name: 'Total Quantity of Items',
-                    data: series,
-                },
-            ],
-            colors: colors,  // Apply generated colors
             xaxis: {
-                categories: categories,
+                categories: @json($categories),
             },
-            yaxis: {
-                labels: {
-                    formatter: function(val) {
-                        return val.toFixed(0);
-                    }
-                }
-            }
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            fill: {
+                opacity: 1
+            },
+            colors: @json($colors), // Apply colors here
         };
 
-        new ApexCharts(document.querySelector(chartID), options).render();
+        var chart = new ApexCharts(document.querySelector('#{{ $chartID }}'), options);
+        chart.render();
     });
 </script>
-@endpush
