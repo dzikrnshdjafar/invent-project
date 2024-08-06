@@ -17,16 +17,6 @@
             </table>
         </div>
     </div>
-</div>
+</div>    
     <script src="{{ asset('mzr') }}/assets/extensions/simple-datatables/umd/simple-datatables.js"></script>
     <script src="{{ asset('mzr') }}/assets/static/js/pages/simple-datatables.js"></script>
-
-@push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            $('#table1').DataTable({
-                "iDisplayLength": 5
-            });
-        });
-    </script>
-@endpush

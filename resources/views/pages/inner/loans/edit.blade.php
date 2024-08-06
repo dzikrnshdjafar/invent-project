@@ -20,6 +20,7 @@
             <div class="form-group">
                 <label for="status">Status</label>
                 <select name="status" class="form-control" id="status" required>
+                    <option value="pending" {{ $loan->status == 'pending' ? 'selected' : '' }}>Pending</option>
                     <option value="borrowed" {{ $loan->status == 'borrowed' ? 'selected' : '' }}>Dipinjam</option>
                     <option value="returned" {{ $loan->status == 'returned' ? 'selected' : '' }}>Dikembalikan</option>
                 </select>

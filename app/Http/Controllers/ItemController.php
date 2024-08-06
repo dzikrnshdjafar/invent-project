@@ -15,17 +15,16 @@ class ItemController extends Controller
         $items = Item::with('rooms')->get();
 
         // Hitung total jumlah semua item dari tabel pivot
-        $totalItems = Item::with('rooms')
-            ->get()
-            ->sum(function ($item) {
-                return $item->rooms->sum('pivot.quantity');
-            });
+        $totalItems = $items->sum(function ($item) {
+            return $item->rooms->sum('pivot.quantity');
+        });
 
         // Hitung jumlah item yang dipinjam dari tabel loans
         $borrowedItems = Loan::where('status', 'borrowed')->sum('quantity');
 
         return view('pages.inner.items.index', compact('items', 'totalItems', 'borrowedItems'));
     }
+
 
 
 

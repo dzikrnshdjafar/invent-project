@@ -75,11 +75,13 @@ class LoanController extends Controller
             'status' => 'pending',
         ]);
 
-        // Ensure loan_duration is an integer
-        $loanDuration = intval($request->loan_duration);
+        // // Ensure loan_duration is an integer
+        // $loanDuration = intval($request->loan_duration);
 
-        // Schedule WhatsApp reminder
-        SendLoanReminder::dispatch($loan)->delay(now()->addMinutes($loanDuration));
+        // dd($loan);
+
+        // // Schedule WhatsApp reminder
+        // SendLoanReminder::dispatch($loan)->delay(now()->addMinutes($loanDuration));
 
         return redirect()->route('loans.index')->with('success', 'Loan created successfully.');
     }
@@ -155,7 +157,6 @@ class LoanController extends Controller
         // Ambil data loan_quantity dari tabel loans
         $loanQuantities = $loan->quantity;
 
-
         return view('pages.inner.loans.manage-quantities', compact('loan', 'rooms', 'loanQuantities'));
     }
 
@@ -189,6 +190,11 @@ class LoanController extends Controller
 
             $loan->update(['status' => 'borrowed']);
         });
+
+        $loanDuration = $loan->loan_duration;
+
+        // Schedule WhatsApp reminder
+        SendLoanReminder::dispatch($loan)->delay(now()->addMinutes($loanDuration));
 
         return redirect()->route('loans.index')->with('success', 'Quantities successfully updated.');
     }
@@ -227,6 +233,7 @@ class LoanController extends Controller
             }
 
             $loan->update(['status' => 'returned']);
+            $loan->update(['return_date' => now()]);
         });
 
         return redirect()->route('loans.index')->with('success', 'Items returned successfully.');

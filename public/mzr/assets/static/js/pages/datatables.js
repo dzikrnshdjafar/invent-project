@@ -1,5 +1,6 @@
 let jquery_datatable = $("#table1").DataTable({
-    responsive: true
+    responsive: true,
+    pageLength: 5 // Menampilkan 5 data per halaman
 })
 let customized_datatable = $("#table2").DataTable({
     responsive: true,

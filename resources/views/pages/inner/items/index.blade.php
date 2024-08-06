@@ -39,7 +39,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
-                        <th>Rooms & Quantities</th>
+                        <th>Total Quantity</th>
                         <th>Actions</th>
                     </tr>
                 </x-slot>
@@ -49,9 +49,7 @@
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->description }}</td>
                             <td>
-                                @foreach ($item->rooms as $room)
-                                    <div>{{ $room->name }}: {{ $room->pivot->quantity }}</div>
-                                @endforeach
+                                {{ $item->rooms->sum('pivot.quantity') }}
                             </td>
                             <td>
                                 <!-- Trigger for Detail Modal -->
