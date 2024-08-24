@@ -14,11 +14,11 @@
     @endif
 
     <x-table-card :title="'Daftar Peminjaman'">
-        @can('Create Loans')
+        {{-- @can('Create Loans') --}}
         <x-slot name="headerActions">
             <a href="{{ route('loans.create') }}" class="btn rounded-pill btn-primary mb-0"><i class="bi bi-plus-lg"></i> Buat Peminjaman</a>
         </x-slot>
-        @endcan
+        {{-- @endcan --}}
         <x-slot name="tableHeader">
             <tr>
                 <th>ID</th>

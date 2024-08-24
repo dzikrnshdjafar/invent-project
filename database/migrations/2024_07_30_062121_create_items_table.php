@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->string('condition')->nullable(); // Kolom untuk kondisi item (new, used, damaged)
+            $table->string('category')->nullable(); // Kolom untuk kategori item (it, furniture, electronics)
+            $table->string('image')->nullable(); // Kolom untuk path gambar
             $table->timestamps();
-            $table->softDeletes(); // Menambahkan kolom deleted_at untuk soft deletes
+            $table->softDeletes(); // Kolom untuk soft deletes
         });
     }
 

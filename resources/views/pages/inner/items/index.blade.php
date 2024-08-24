@@ -37,8 +37,12 @@
                 </x-slot>
                 <x-slot name="tableHeader">
                     <tr>
+                        <th>Id</th>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>Category</th> <!-- New column for category -->
+                        <th>Condition</th> <!-- New column for condition -->
+                        <th>Image</th> <!-- New column for image -->
                         <th>Total Quantity</th>
                         <th>Actions</th>
                     </tr>
@@ -46,11 +50,19 @@
                 <x-slot name="tableBody">
                     @foreach ($items as $item)
                         <tr>
+                            <td>{{ $item->formatted_id }}</td>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->description }}</td>
+                            <td>{{ $item->category }}</td> <!-- Display category -->
+                            <td>{{ $item->condition }}</td> <!-- Display condition -->
                             <td>
-                                {{ $item->rooms->sum('pivot.quantity') }}
+                                @if($item->image)
+                                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="img-thumbnail" width="100">
+                                @else
+                                    No Image
+                                @endif
                             </td>
+                            <td>{{ $item->rooms->sum('pivot.quantity') }}</td>
                             <td>
                                 <!-- Trigger for Detail Modal -->
                                 <button type="button" class="btn rounded-pill btn-light-info" data-bs-toggle="modal" data-bs-target="#itemModal{{ $item->id }}">

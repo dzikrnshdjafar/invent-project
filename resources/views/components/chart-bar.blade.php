@@ -11,42 +11,41 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var options = {
-            series: @json($series),
+            series: [{
+                data: @json($series) // Mengubah format series menjadi objek dengan data array
+            }],
             chart: {
-                height: 400,
-                type: 'radialBar',
-            },
-            plotOptions: {
-                radialBar: {
-                    offsetY: 0,
-                    startAngle: 0,
-                    endAngle: 270,
-                    hollow: {
-                        margin: 5,
-                        size: '10%',
-                        background: 'transparent',
-                    },
-                    dataLabels: {
-                        name: {
-                            show: false,
-                        },
-                        value: {
-                            show: true,
-                        }
-                    },
-                    barLabels: {
-                        enabled: true,
-                        useSeriesColors: true,
-                        offsetX: -8,
-                        fontSize: '16px',
-                        formatter: function(seriesName, opts) {
-                            return seriesName + ": " + opts.w.globals.series[opts.seriesIndex]
-                        },
-                    },
+                height: 350,
+                type: 'bar',
+                events: {
+                    click: function(chart, w, e) {
+                        // Fungsi klik dapat Anda sesuaikan sesuai kebutuhan
+                        // console.log(chart, w, e);
+                    }
                 }
             },
-            colors: @json($colors),
-            labels: @json($labels),
+            colors: @json($colors), // Tetapkan warna yang sama dari props
+            plotOptions: {
+                bar: {
+                    columnWidth: '45%',
+                    distributed: true,
+                }
+            },
+            dataLabels: {
+                enabled: false // Data labels diatur ke false untuk model bar ini
+            },
+            legend: {
+                show: false // Legenda disembunyikan
+            },
+            xaxis: {
+                categories: @json($labels), // Menggunakan labels untuk kategori x-axis
+                labels: {
+                    style: {
+                        colors: @json($colors), // Warna label menyesuaikan warna bar
+                        fontSize: '12px'
+                    }
+                }
+            },
             responsive: [{
                 breakpoint: 480,
                 options: {

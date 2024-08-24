@@ -34,7 +34,7 @@ class SendNotifd1 implements ShouldQueue
      */
     public function handle()
     {
-        $user = User::find($this->loan->user_id);
+        // $user = User::find($this->loan->user_id);
         $client = new Client();
 
         $response = $client->post('https://api.fonnte.com/send', [
@@ -42,7 +42,7 @@ class SendNotifd1 implements ShouldQueue
                 'Authorization' => env('FONNTE_API_KEY'),
             ],
             'form_params' => [
-                'target' => $user->no_hp,
+                'target' => $this->loan->no_hp,
                 'message' => 'Pengingat: Anda meminjam item dengan nama ' . $this->loan->item->name . ' selama ' . $this->loan->loan_duration . ' hari.',
                 'schedule' => 0,
                 'countryCode' => '62',

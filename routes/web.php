@@ -9,11 +9,11 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ProfileController;
 
-Route::get('/', function () {
-    return view('layouts.outer.landing-page');
-});
+// Route::get('/', function () {
+//     return view('layouts.outer.landing-page');
+// });
 
-// Route::get('/', [OuterController::class, 'index']);
+Route::get('/', [OuterController::class, 'index']);
 
 Route::get('/dashboard', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 

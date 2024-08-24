@@ -37,28 +37,32 @@ class LoanController extends Controller
 
     public function create()
     {
-        if (Gate::denies('Create Loans')) {
-            abort(403);
-        }
+        // if (Gate::denies('Create Loans')) {
+        //     abort(403);
+        // }
 
-        $items = Item::with('rooms')->get()->map(function ($item) {
-            $item->available_quantity = $item->rooms->sum('pivot.quantity');
-            return $item;
-        });
+        $items = Item::with('rooms')
+            ->where('category', 'Bisa Dipinjamkan') // Filter items by category
+            ->get()
+            ->map(function ($item) {
+                $item->available_quantity = $item->rooms->sum('pivot.quantity');
+                return $item;
+            });
 
         return view('pages.inner.loans.create', compact('items'));
     }
 
     public function store(Request $request)
     {
-        if (Gate::denies('Create Loans')) {
-            abort(403);
-        }
+        // if (Gate::denies('Create Loans')) {
+        //     abort(403);
+        // }
 
         $request->validate([
             'item_id' => 'required|exists:items,id',
             'loan_duration' => 'required|integer|min:1',
             'quantity' => 'required|integer|min:1',
+            'no_hp' => 'required',
         ]);
 
         $item = Item::with('rooms')->findOrFail($request->item_id);
@@ -73,6 +77,7 @@ class LoanController extends Controller
             'user_id' => auth()->id(),
             'loan_duration' => $request->loan_duration,
             'quantity' => $request->quantity,
+            'no_hp' => $request->no_hp,
             'status' => 'pending',
         ]);
 

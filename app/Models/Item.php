@@ -10,7 +10,12 @@ class Item extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'category', 'condition', 'image'];
+
+    public function getFormattedIdAttribute()
+    {
+        return str_pad($this->id, 3, '0', STR_PAD_LEFT);
+    }
 
     public function rooms()
     {

@@ -19,6 +19,10 @@
                 <input type="number" name="loan_duration" id="loan_duration" class="form-control" required min="1">
             </div>
             <div class="form-group mt-3">
+                <label for="no_hp">No HP:</label>
+                <input type="text" name="no_hp" id="no_hp" class="form-control" required>
+            </div>
+            <div class="form-group mt-3">
                 <label for="quantity">Quantity:</label>
                 <input type="number" name="quantity" id="quantity" class="form-control" required min="1">
                 <small id="available-quantity" class="form-text text-muted"></small>

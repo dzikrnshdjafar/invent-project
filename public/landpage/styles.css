@@ -1,0 +1,157 @@
+body{
+    font-family: 'Nunito';
+}
+h1{
+    font-family: 'Poppins';
+}
+footer {
+    background: 
+    #001C0B;
+}
+.hero-section {
+    background-image: url('bg.png');
+    background-position: center top -110px; /* Geser background lebih ke atas */
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        background-position: center top; /* Adjust positioning for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        background-position: center top; /* Adjust positioning further for very small screens */
+        height: 70vh; /* Mengurangi tinggi agar sesuai dengan layar yang lebih kecil */
+    }
+}
+
+.about-section {
+    background-image: url('objects.svg'); /* Ganti dengan path file SVG kamu */
+    background-size: cover; /* Mengatur ukuran gambar agar menutupi seluruh area */
+    background-position: center; /* Menjaga posisi tengah background */
+    background-repeat: no-repeat; /* Menghindari pengulangan gambar */
+    color: black;
+    display: flex;
+    flex-direction: column;
+}
+
+.title-with-border {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 12px; /* Adjust the padding to your preference */
+}
+
+.title-with-border::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50%; /* Adjust the width to control the border length */
+    height: 3px; /* Adjust the thickness of the border */
+    background-color: #006326; /* Matches the text color */
+}
+
+.border-t-custom {
+    border-top: 0.5px solid rgba(255, 255, 255, 0.3)
+}
+
+.card {
+    background-color: #1A4D2E;
+    height: 24rem; /* h-96 */
+    padding: 2rem; /* p-8 */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* shadow-lg */
+    border-radius: 1.5rem; /* rounded-3xl */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease; /* Animasi untuk transisi */
+}
+
+.card img {
+    margin-bottom: 2rem; /* mb-8 */
+    max-width: 100%; /* Membuat gambar responsif */
+    height: auto; /* Membuat gambar mempertahankan aspek rasio */
+}
+
+.card .alert-icon {
+    position: absolute;
+    background-color: #DC2626; /* bg-red-600 */
+    color: white;
+    font-size: 0.75rem; /* text-xs */
+    font-weight: bold;
+    padding: 0.25rem 0.75rem; /* px-3 py-1 */
+    border-radius: 9999px; /* rounded-full */
+    border: 2px solid white;
+}
+
+.card h2 {
+    font-size: 3rem; /* text-5xl */
+    font-weight: 600; /* font-semibold */
+    color: white;
+    margin-bottom: 3.5rem; /* mb-14 */
+    flex-grow: 1;
+}
+
+.card p {
+    font-size: 6rem; /* text-9xl */
+    font-weight: 800; /* font-extrabold */
+    color: white;
+    text-align: right; /* text-end */
+}
+
+/* Responsive untuk tablet dan ke bawah */
+@media (max-width: 1024px) {
+    .card {
+        height: 20rem; /* Mengurangi tinggi card */
+        padding: 1.5rem; /* Mengurangi padding */
+    }
+
+    .card h2 {
+        font-size: 2.5rem; /* text-4xl */
+        margin-bottom: 2.5rem; /* mb-10 */
+    }
+
+    .card p {
+        font-size: 5rem; /* text-7xl */
+    }
+
+    .card .alert-icon {
+        font-size: 0.625rem; /* text-[10px] */
+        padding: 0.25rem 0.5rem; /* px-2 py-1 */
+    }
+}
+
+/* Responsive untuk mobile dan ke bawah */
+@media (max-width: 768px) {
+    .card {
+        height: 16rem; /* Mengurangi tinggi card */
+        padding: 1rem; /* Mengurangi padding */
+    }
+
+    .card h2 {
+        font-size: 2rem; /* text-3xl */
+        margin-bottom: 1.5rem; /* mb-6 */
+    }
+
+    .card p {
+        font-size: 4rem; /* text-6xl */
+    }
+
+    .card .alert-icon {
+        font-size: 0.5rem; /* text-[8px] */
+        padding: 0.125rem 0.375rem; /* px-1.5 py-0.5 */
+    }
+}
+
+
+

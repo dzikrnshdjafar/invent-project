@@ -72,6 +72,9 @@ class ItemFactory extends Factory
         return [
             'name' => $this->faker->unique()->randomElement($itemNames),
             'description' => $this->faker->sentence,
+            'condition' => null,
+            'category' => null,
+            'image' => null,
             'created_at' => now(),
             'updated_at' => now(),
         ];

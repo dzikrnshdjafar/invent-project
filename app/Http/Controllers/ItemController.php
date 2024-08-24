@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\Loan;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -26,9 +27,6 @@ class ItemController extends Controller
     }
 
 
-
-
-
     public function create()
     {
         $rooms = Room::all();
@@ -37,24 +35,40 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the request
+        // Validasi input
         $request->validate([
             'name' => 'required|string',
             'description' => 'nullable|string',
+            'condition' => 'required|string',
+            'category' => 'required|string',
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'rooms' => 'required|array',
             'rooms.*.room_id' => 'required|exists:rooms,id',
             'rooms.*.quantity' => 'required|integer|min:1',
         ]);
 
-        // Create the item
+        // Generate a new item with an auto-increment ID
+        $lastItem = Item::orderBy('id')->first();
+        $newId = $lastItem ? $lastItem->id + 1 : 1;
+
+        // Handle Image Upload
+        if ($request->hasFile('image')) {
+            // Simpan file gambar ke folder 'public/images'
+            $imagePath = $request->file('image')->store('images', 'public');
+        }
+
+        // Simpan item dengan path gambar
         $item = Item::create([
+            'id' => $newId,
             'name' => $request->name,
             'description' => $request->description,
+            'condition' => $request->condition,
+            'category' => $request->category,
+            'image' => $imagePath, // Simpan path gambar ke database
         ]);
 
-        // Attach the rooms with quantities
+        // Lampirkan ruangan dengan jumlahnya
         foreach ($request->rooms as $room) {
-            // Ensure only valid rooms with quantities are attached
             if (!empty($room['room_id']) && !empty($room['quantity'])) {
                 $item->rooms()->attach($room['room_id'], ['quantity' => $room['quantity']]);
             }
@@ -62,7 +76,6 @@ class ItemController extends Controller
 
         return redirect()->route('items.index')->with('success', 'Item created successfully.');
     }
-
 
 
     public function show(Item $item)
@@ -86,18 +99,41 @@ class ItemController extends Controller
             'rooms' => 'required|array',
             'rooms.*.room_id' => 'required|exists:rooms,id',
             'rooms.*.quantity' => 'required|integer|min:1',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk gambar
         ]);
 
-        // Update item details
-        $item->update([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
+        // Jika ada gambar baru yang diunggah
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama dari storage jika ada
+            if ($item->image) {
+                Storage::delete('public/' . $item->image);
+            }
 
-        // Detach all rooms
+            // Simpan gambar baru dan ambil path-nya
+            $imagePath = $request->file('image')->store('images', 'public');
+
+            // Update item dengan gambar baru
+            $item->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'condition' => $request->condition,
+                'category' => $request->category,
+                'image' => $imagePath, // Simpan path gambar baru
+            ]);
+        } else {
+            // Update item tanpa mengganti gambar
+            $item->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'condition' => $request->condition,
+                'category' => $request->category,
+            ]);
+        }
+
+        // Detach semua rooms
         $item->rooms()->detach();
 
-        // Attach rooms with quantities
+        // Attach rooms dengan quantity yang baru
         foreach ($request->rooms as $room) {
             if (!empty($room['room_id']) && !empty($room['quantity'])) {
                 $item->rooms()->attach($room['room_id'], ['quantity' => $room['quantity']]);
@@ -108,9 +144,10 @@ class ItemController extends Controller
     }
 
 
+
     public function destroy(Item $item)
     {
-        // Periksa apakah ada pinjaman dengan status 'borrowed' untuk item ini
+        // Periksa apakah ada pinjaman dengan status 'pending' untuk item ini
         $pendingCheck = Loan::where('item_id', $item->id)
             ->where('status', 'pending')
             ->exists();
@@ -133,6 +170,11 @@ class ItemController extends Controller
             ->where('status', 'returned')
             ->count();
 
+        // Hapus gambar dari storage jika ada
+        if ($item->image) {
+            Storage::delete('public/' . $item->image);
+        }
+
         if ($returnedLoans > 0) {
             // Lakukan soft delete
             $item->delete();
@@ -143,6 +185,7 @@ class ItemController extends Controller
         $item->forceDelete();
         return redirect()->route('items.index')->with('success', 'Item has been permanently deleted.');
     }
+
 
 
     public function getRooms($itemId)
