@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\Loan;
 use App\Models\Room;
+use App\Jobs\SendNotifd1;
 use Illuminate\Http\Request;
 use App\Jobs\SendLoanReminder;
 use Illuminate\Support\Facades\DB;
@@ -194,6 +195,7 @@ class LoanController extends Controller
         $loanDuration = $loan->loan_duration;
 
         // Schedule WhatsApp reminder
+        SendNotifd1::dispatch($loan)->delay(now()->addMinutes($loanDuration - 1));
         SendLoanReminder::dispatch($loan)->delay(now()->addMinutes($loanDuration));
 
         return redirect()->route('loans.index')->with('success', 'Quantities successfully updated.');

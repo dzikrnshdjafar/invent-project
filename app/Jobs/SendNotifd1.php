@@ -11,7 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SendLoanReminder implements ShouldQueue
+class SendNotifd1 implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -43,7 +43,7 @@ class SendLoanReminder implements ShouldQueue
             ],
             'form_params' => [
                 'target' => $user->no_hp,
-                'message' => 'Delo Kase Pulang barang hede',
+                'message' => 'Pengingat: Anda meminjam item dengan nama ' . $this->loan->item->name . ' selama ' . $this->loan->loan_duration . ' hari.',
                 'schedule' => 0,
                 'countryCode' => '62',
             ],

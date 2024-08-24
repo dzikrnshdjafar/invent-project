@@ -4,13 +4,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\OuterController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.outer.landing-page');
 });
+
+// Route::get('/', [OuterController::class, 'index']);
 
 Route::get('/dashboard', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 

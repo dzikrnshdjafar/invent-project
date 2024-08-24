@@ -40,5 +40,12 @@ class UserSeeder extends Seeder
             'no_hp' => '082393521550',
             'password' => bcrypt('asdasdasd'),
         ]);
+
+        User::create([
+            'name' => 'Ndru',
+            'email' => 'peminjam3@gmail.com',
+            'no_hp' => '085244157231',
+            'password' => bcrypt('asdasdasd'),
+        ]);
     }
 }

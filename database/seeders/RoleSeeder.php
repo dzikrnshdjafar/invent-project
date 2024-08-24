@@ -21,11 +21,13 @@ class RoleSeeder extends Seeder
         $user2 = User::find(2);
         $user3 = User::find(3);
         $user4 = User::find(4);
+        $user5 = User::find(5);
 
         $user1->assignRole('Admin');
         $user2->assignRole('Pengelola');
         $user3->assignRole('Peminjam');
         $user4->assignRole('Peminjam');
+        $user5->assignRole('Peminjam');
 
         // Assign permissions to roles
         $crudItemsPermission = Permission::where('name', 'CRUD Items')->first();
