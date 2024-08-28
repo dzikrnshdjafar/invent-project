@@ -19,6 +19,7 @@ class LoanSeeder extends Seeder
         Loan::create([
             'item_id' => 4,
             'user_id' => 3,
+            'no_hp' => '08126712652',
             'loan_duration' => 7,
             'quantity' => 2,
             'return_date' => null,
@@ -28,6 +29,7 @@ class LoanSeeder extends Seeder
         Loan::create([
             'item_id' => 5,
             'user_id' => 3,
+            'no_hp' => '89762398',
             'loan_duration' => 1,
             'quantity' => 3,
             'return_date' => null,
@@ -37,6 +39,7 @@ class LoanSeeder extends Seeder
         Loan::create([
             'item_id' => 1,
             'user_id' => 3,
+            'no_hp' => '09812363',
             'loan_duration' => 5,
             'quantity' => 6,
             'return_date' => Carbon::now()->addDays(3)->format('Y-m-d'),

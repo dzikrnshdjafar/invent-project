@@ -16,8 +16,12 @@
     <x-table-card :title="'Daftar Peminjaman'">
         {{-- @can('Create Loans') --}}
         <x-slot name="headerActions">
-            <a href="{{ route('loans.create') }}" class="btn rounded-pill btn-primary mb-0"><i class="bi bi-plus-lg"></i> Buat Peminjaman</a>
+            <div class="justify-content-end">
+                <a href="{{ route('loans.create') }}" class="btn btn-primary mb-0"><i class="bi bi-plus-lg"></i> Buat Peminjaman</a>
+                <a href="{{ route('loans.export.pdf') }}" class="btn btn-danger mb-0"><i class="bi bi-file-earmark-pdf"></i> Export PDF</a>
+            </div>
         </x-slot>
+        
         {{-- @endcan --}}
         <x-slot name="tableHeader">
             <tr>
@@ -57,27 +61,27 @@
                     </td>
                     <td>
                         <!-- Trigger for Detail Modal -->
-                        <button type="button" class="btn rounded-pill btn-light-info" data-bs-toggle="modal" data-bs-target="#loanModal{{ $loan->id }}">
-                            <i class="bi bi-info-circle"></i>
+                        <button type="button" class="btn btn-light-info" data-bs-toggle="modal" data-bs-target="#loanModal{{ $loan->id }}">
+                            Detail
                         </button>
                         @can('Edit Loans')
-                        <a href="{{ route('loans.edit', $loan->id) }}" class="btn rounded-pill btn-light-warning"><i class="bi bi-pencil"></i></a>
+                        <a href="{{ route('loans.edit', $loan->id) }}" class="btn btn-light-warning">Edit</a>
                         @endcan
                         @can('Delete Loans')
                         <form action="{{ route('loans.destroy', $loan->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn rounded-pill btn-light-danger" onclick="return confirm('Are you sure you want to delete this loan?')"><i class="bi bi-x"></i></button>
+                            <button type="submit" class="btn btn-light-danger" onclick="return confirm('Are you sure you want to delete this loan?')">Hapus</button>
                         </form>
                         @endcan
                         @can('Manage Quantities')
                             @if($loan->status == 'pending')
-                                <a href="{{ route('loans.manageQuantities', $loan->id) }}" class="btn rounded-pill btn-primary">Manage Quantities</a>
+                                <a href="{{ route('loans.manageQuantities', $loan->id) }}" class="btn btn-primary">Manage Quantities</a>
                             @endif
                         @endcan
                         @can('Return Items')
                             @if($loan->status == 'borrowed')
-                                <a href="{{ route('loans.returnItemsForm', $loan->id) }}" class="btn rounded-pill btn-success">Return Items</a>
+                                <a href="{{ route('loans.returnItemsForm', $loan->id) }}" class="btn btn-success">Return Items</a>
                             @endif
                         @endcan
                     </td>

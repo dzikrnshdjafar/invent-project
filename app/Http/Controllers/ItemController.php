@@ -153,7 +153,7 @@ class ItemController extends Controller
             ->exists();
 
         if ($pendingCheck) {
-            return redirect()->route('items.index')->with('error', 'The item cannot be deleted because it has a loan request.');
+            return redirect()->route('items.index')->with('error', 'Gagal menghapus item, Karena ada request peminjaman.');
         }
 
         // Periksa apakah ada pinjaman dengan status 'borrowed' untuk item ini
@@ -162,7 +162,7 @@ class ItemController extends Controller
             ->exists();
 
         if ($loanExists) {
-            return redirect()->route('items.index')->with('error', 'Item cannot be deleted because it is currently borrowed.');
+            return redirect()->route('items.index')->with('error', 'Gagal menghapus item, Karena masih dalam peminjaman.');
         }
 
         // Periksa apakah ada pinjaman dengan status 'returned' untuk item ini
@@ -178,12 +178,12 @@ class ItemController extends Controller
         if ($returnedLoans > 0) {
             // Lakukan soft delete
             $item->delete();
-            return redirect()->route('items.index')->with('success', 'Item has been soft deleted.');
+            return redirect()->route('items.index')->with('success', 'Item Terhapus.');
         }
 
         // Hapus item secara permanen jika tidak ada pinjaman terkait
         $item->forceDelete();
-        return redirect()->route('items.index')->with('success', 'Item has been permanently deleted.');
+        return redirect()->route('items.index')->with('success', 'Item Terhapus.');
     }
 
 

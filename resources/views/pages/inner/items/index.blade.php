@@ -5,13 +5,13 @@
         <div class="col-12">
             <div class="row d-flex justify-content-center">
                 <x-statistics.info-card 
-                    :title="'Barang Tersedia'" 
+                    :title="'Tersedia'" 
                     :value="$totalItems" 
                     :iconColor="'green'" 
                     :iconClass="'fas fa-boxes'" 
                 />
                 <x-statistics.info-card 
-                    :title="'Barang Dipinjam'" 
+                    :title="'Dipinjam'" 
                     :value="$borrowedItems" 
                     :iconColor="'red'" 
                     :iconClass="'fas fa-handshake'" 
@@ -33,17 +33,16 @@
             @endif
             <x-table-card :title="'Daftar Barang'">
                 <x-slot name="headerActions">
-                    <a href="{{ route('items.create') }}" class="btn rounded-pill btn-primary mb-0"><i class="bi bi-plus-lg"></i> Tambah Barang</a>
+                    <a href="{{ route('items.create') }}" class="btn btn-primary mb-0"><i class="bi bi-plus-lg"></i> Tambah Barang</a>
                 </x-slot>
                 <x-slot name="tableHeader">
                     <tr>
                         <th>Id</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Category</th> <!-- New column for category -->
-                        <th>Condition</th> <!-- New column for condition -->
-                        <th>Image</th> <!-- New column for image -->
-                        <th>Total Quantity</th>
+                        <th>Nama</th>
+                        <th>Kategori</th> <!-- New column for category -->
+                        <th>Kondisi</th> <!-- New column for condition -->
+                        <th>Gambar</th> <!-- New column for image -->
+                        <th>Jumlah</th>
                         <th>Actions</th>
                     </tr>
                 </x-slot>
@@ -52,7 +51,6 @@
                         <tr>
                             <td>{{ $item->formatted_id }}</td>
                             <td>{{ $item->name }}</td>
-                            <td>{{ $item->description }}</td>
                             <td>{{ $item->category }}</td> <!-- Display category -->
                             <td>{{ $item->condition }}</td> <!-- Display condition -->
                             <td>
@@ -65,14 +63,14 @@
                             <td>{{ $item->rooms->sum('pivot.quantity') }}</td>
                             <td>
                                 <!-- Trigger for Detail Modal -->
-                                <button type="button" class="btn rounded-pill btn-light-info" data-bs-toggle="modal" data-bs-target="#itemModal{{ $item->id }}">
-                                    <i class="bi bi-info-circle"></i>
+                                <button type="button" class="btn btn-light-info" data-bs-toggle="modal" data-bs-target="#itemModal{{ $item->id }}">
+                                    Detail
                                 </button>
-                                <a href="{{ route('items.edit', $item->id) }}" class="btn rounded-pill btn-light-warning"><i class="bi bi-pencil"></i></a>
+                                <a href="{{ route('items.edit', $item->id) }}" class="btn btn-light-warning">Edit</a>
                                 <form action="{{ route('items.destroy', $item->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn rounded-pill btn-light-danger"><i class="bi bi-x"></i></button>
+                                    <button type="submit" class="btn btn-light-danger">Hapus</button>
                                 </form>
                             </td>
                         </tr>

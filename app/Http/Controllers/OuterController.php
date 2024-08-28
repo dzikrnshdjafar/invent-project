@@ -16,10 +16,28 @@ class OuterController extends Controller
             return $item->rooms->sum('pivot.quantity');
         });
 
-        return view('layouts.outer.landing-page', [
+        $goodItemsCount = Item::where('condition', 'baik')->count();
+        $restoreItemsCount = Item::where('condition', 'dalam perbaikan')->count();
+        $damagedItemsCount = Item::where('condition', 'rusak')->count();
+
+        return view('pages.outer.landing-page', [
             "title" => "Data Daerah Irigasi",
             "items" => $items,
+            "itemsBaik" => $goodItemsCount,
+            "itemsDalamPerbaikan" => $restoreItemsCount,
+            "itemsRusak" => $damagedItemsCount,
             "totalItems" => $totalItems,
+        ]);
+    }
+
+
+
+    public function daftar()
+    {
+        $items = Item::paginate(8); // Ganti 8 dengan jumlah item per halaman yang Anda inginkan
+
+        return view('pages.outer.daftar-barang', [
+            "items" => $items
         ]);
     }
 }

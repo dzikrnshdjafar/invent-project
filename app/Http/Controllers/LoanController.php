@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
+use Mpdf\Mpdf;
 use App\Models\Item;
 use App\Models\Loan;
 use App\Models\Room;
@@ -263,5 +265,21 @@ class LoanController extends Controller
 
 
         return view('pages.inner.loans.return-items', compact('loan', 'rooms', 'loanQuantities'));
+    }
+
+    public function exportPDF()
+    {
+        $loans = Loan::with(['item' => function ($query) {
+            $query->withTrashed();
+        }, 'user'])->get();
+
+        $html = view('pages.inner.loans.pdf', compact('loans'))->render();
+
+        $mpdf = new Mpdf();
+
+        $mpdf->WriteHTML($html);
+        $mpdf->Output('loans.pdf', 'D'); // 'D' untuk download, bisa diganti dengan 'I' untuk inline
+
+        exit;
     }
 }

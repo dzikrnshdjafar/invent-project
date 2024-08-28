@@ -69,12 +69,34 @@ class ItemFactory extends Factory
             'Bibit tanaman hidroponik',
         ];
 
+        $image = [
+            'images/1.png',
+            'images/2.png',
+            'images/3.png',
+            'images/4.png',
+            'images/5.png',
+            'images/6.png',
+            'images/7.png',
+            'images/8.png',
+        ];
+
+        $condition = [
+            'baik',
+            'rusak',
+            'dalam perbaikan',
+        ];
+
+        $category = [
+            'bisa dipinjamkan',
+            'tidak bisa dipinjamkan',
+        ];
+
         return [
             'name' => $this->faker->unique()->randomElement($itemNames),
             'description' => $this->faker->sentence,
-            'condition' => null,
-            'category' => null,
-            'image' => null,
+            'condition' => $this->faker->randomElement($condition),
+            'category' => $this->faker->randomElement($category),
+            'image' => $this->faker->randomElement($image),
             'created_at' => now(),
             'updated_at' => now(),
         ];

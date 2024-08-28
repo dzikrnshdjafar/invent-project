@@ -14,6 +14,7 @@ use App\Http\Controllers\ProfileController;
 // });
 
 Route::get('/', [OuterController::class, 'index']);
+Route::get('/barang', [OuterController::class, 'daftar']);
 
 Route::get('/dashboard', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -33,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::put('loans/{loan}/update-quantities', [LoanController::class, 'updateQuantities'])->name('loans.updateQuantities');
     Route::put('/loans/{loan}/return-items', [LoanController::class, 'returnItems'])->name('loans.returnItems');
     Route::get('/loans/{loan}/return-items', [LoanController::class, 'returnItemsForm'])->name('loans.returnItemsForm');
+    Route::get('/loans/export/pdf', [LoanController::class, 'exportPDF'])->name('loans.export.pdf');
 });
 
 

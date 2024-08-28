@@ -43,7 +43,7 @@ class SendLoanReminder implements ShouldQueue
             ],
             'form_params' => [
                 'target' => $this->loan->no_hp,
-                'message' => 'Delo Kase Pulang barang hede',
+                'message' => 'Pengingat: Anda meminjam item dengan nama ' . $this->loan->item->name . ' dengan tenggat waktu sampai hari ini.',
                 'schedule' => 0,
                 'countryCode' => '62',
             ],

@@ -1,78 +1,61 @@
-<nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand" href="index.html">
-      <img src="assets/images/logo/logo.svg" alt="Logo" />
-    </a>
-    <button class="navbar-toggler">
-      <span class="toggler-icon"> </span>
-      <span class="toggler-icon"> </span>
-      <span class="toggler-icon"> </span>
-    </button>
-
-    <div class="navbar-collapse">
-      <ul id="nav" class="navbar-nav mx-auto">
-        <li class="nav-item">
-          <a class="ud-menu-scroll" href="#home">Home</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="ud-menu-scroll" href="#about">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="ud-menu-scroll" href="#pricing">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a class="ud-menu-scroll" href="#team">Team</a>
-        </li>
-        <li class="nav-item">
-          <a class="ud-menu-scroll" href="#contact">Contact</a>
-        </li>
-        <li class="nav-item nav-item-has-children">
-          <a href="javascript:void(0)"> Pages </a>
-          <ul class="ud-submenu">
-            <li class="ud-submenu-item">
-              <a href="{{ asset('landpage') }}/about.html" class="ud-submenu-link">
-                About Page
-              </a>
-            </li>
-            <li class="ud-submenu-item">
-              <a href="{{ asset('landpage') }}/pricing.html" class="ud-submenu-link">
-                Pricing Page
-              </a>
-            </li>
-            <li class="ud-submenu-item">
-              <a href="{{ asset('landpage') }}/contact.html" class="ud-submenu-link">
-                Contact Page
-              </a>
-            </li>
-            <li class="ud-submenu-item">
-              <a href="{{ asset('landpage') }}/blog.html" class="ud-submenu-link">
-                Blog Grid Page
-              </a>
-            </li>
-            <li class="ud-submenu-item">
-              <a href="{{ asset('landpage') }}/blog-details.html" class="ud-submenu-link">
-                Blog Details Page
-              </a>
-            </li>
-            <li class="ud-submenu-item">
-              <a href="{{ asset('landpage') }}/login.html" class="ud-submenu-link">
-                Sign In Page
-              </a>
-            </li>
-            <li class="ud-submenu-item">
-              <a href="{{ asset('landpage') }}/404.html" class="ud-submenu-link">404 Page</a>
+<nav class="container mx-auto">
+  <div class="navbar text-white">
+      <div class="navbar-start">
+        <div class="dropdown">
+          <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h8m-8 6h16" />
+            </svg>
+          </div>
+          <ul
+            tabindex="0"
+            class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+            <li><a href="/">Home</a></li>
+            <li><a href="barang">Daftar Alat</a></li>
+            <li>
+              <a>Kategori Alat</a>
+              <ul class="p-2">
+                <li><a>Submenu 1</a></li>
+                <li><a>Submenu 2</a></li>
+              </ul>
             </li>
           </ul>
-        </li>
-      </ul>
-    </div>
+        </div>
+        <a href="/">
+          <img src="{{ asset("landpage") }}/asset/logo_light.png" alt="Logo" class="h-20 w-auto">
+        </a>
+      </div>
+      <div class="navbar-end">
+          <ul class="menu menu-horizontal px-1 hidden lg:flex">
+              <li><a href="/">Home</a></li>
+              <li><a href="barang">Daftar Alat</a></li>
+              <li>
+                <details>
+                  <summary>Kategori Alat</summary>
+                  <ul class="p-2">
+                    <li><a>Submenu 1</a></li>
+                    <li><a>Submenu 2</a></li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
 
-    <div class="navbar-btn d-none d-sm-inline-block">
-      <a href="{{ asset('landpage') }}/login.html" class="ud-main-btn ud-login-btn">
-        Sign In
-      </a>
-      <a class="ud-main-btn ud-white-btn" href="{{ asset('landpage') }}/javascript:void(0)">
-        Sign Up
-      </a>
+          @auth
+              <!-- Jika user sudah login, tampilkan tombol Dashboard -->
+              <a class="ml-2 rounded-2xl py-2 px-8 bg-[#429C4A]" href="{{ route('dashboard') }}">Dashboard</a>
+          @else
+              <!-- Jika user belum login, tampilkan tombol Login -->
+              <a class="ml-2 rounded-2xl py-2 px-8 bg-[#429C4A]" href="{{ route('login') }}">Login</a>
+          @endauth
+      </div>
     </div>
-  </nav>
+</nav>
