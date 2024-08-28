@@ -54,7 +54,7 @@
               <a class="ml-2 rounded-2xl py-2 px-8 bg-[#429C4A]" href="{{ route('dashboard') }}">Dashboard</a>
           @else
               <!-- Jika user belum login, tampilkan tombol Login -->
-              <a class="ml-2 rounded-2xl py-2 px-8 bg-[#429C4A]" href="{{ route('login') }}">Login</a>
+              <a class="ml-2 rounded-2xl py-2 px-8 bg-[#429C4A] hover:bg-green-700" href="{{ route('login') }}">Login</a>
           @endauth
       </div>
     </div>

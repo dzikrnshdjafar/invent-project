@@ -1,5 +1,3 @@
-@section('title', 'Barang')
-
 <x-app-layout>
     <section class="row">
         <div class="col-12">
@@ -33,15 +31,19 @@
             @endif
             <x-table-card :title="'Daftar Barang'">
                 <x-slot name="headerActions">
-                    <a href="{{ route('items.create') }}" class="btn btn-primary mb-0"><i class="bi bi-plus-lg"></i> Tambah Barang</a>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                        <a href="{{ route('items.create') }}" class="btn btn-primary">
+                            <i class="bi bi-plus-lg me-1"></i> Tambah Barang
+                        </a>
+                    </div>
                 </x-slot>
                 <x-slot name="tableHeader">
                     <tr>
                         <th>Id</th>
                         <th>Nama</th>
-                        <th>Kategori</th> <!-- New column for category -->
-                        <th>Kondisi</th> <!-- New column for condition -->
-                        <th>Gambar</th> <!-- New column for image -->
+                        <th>Kategori</th>
+                        <th>Kondisi</th>
+                        <th>Gambar</th>
                         <th>Jumlah</th>
                         <th>Actions</th>
                     </tr>
@@ -51,8 +53,8 @@
                         <tr>
                             <td>{{ $item->formatted_id }}</td>
                             <td>{{ $item->name }}</td>
-                            <td>{{ $item->category }}</td> <!-- Display category -->
-                            <td>{{ $item->condition }}</td> <!-- Display condition -->
+                            <td>{{ $item->category }}</td>
+                            <td>{{ $item->condition }}</td>
                             <td>
                                 @if($item->image)
                                     <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="img-thumbnail" width="100">
@@ -63,14 +65,18 @@
                             <td>{{ $item->rooms->sum('pivot.quantity') }}</td>
                             <td>
                                 <!-- Trigger for Detail Modal -->
-                                <button type="button" class="btn btn-light-info" data-bs-toggle="modal" data-bs-target="#itemModal{{ $item->id }}">
-                                    Detail
+                                <button type="button" class="btn btn-light-info me-2 mb-2" data-bs-toggle="modal" data-bs-target="#itemModal{{ $item->id }}">
+                                    <i class="bi bi-info-circle me-1"></i> Detail
                                 </button>
-                                <a href="{{ route('items.edit', $item->id) }}" class="btn btn-light-warning">Edit</a>
+                                <a href="{{ route('items.edit', $item->id) }}" class="btn btn-light-warning me-2 mb-2">
+                                    <i class="bi bi-pencil me-1"></i> Edit
+                                </a>
                                 <form action="{{ route('items.destroy', $item->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-light-danger">Hapus</button>
+                                    <button type="submit" class="btn btn-light-danger mb-2" onclick="return confirm('Are you sure you want to delete this item?')">
+                                        <i class="bi bi-trash3 me-1"></i> Hapus
+                                    </button>
                                 </form>
                             </td>
                         </tr>

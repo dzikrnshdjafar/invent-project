@@ -49,7 +49,7 @@
 </div>
 
 <div class="md:h-screen text-black flex font-[Poppins] mt-40 md:-mt-40 bg-no-repeat bg-cover bg-[url('{{ asset('landpage') }}/asset/objects.svg')]">
-    <div class="container mx-auto -mt-30 md:mt-96 px-20">     
+    <div class="container mx-auto -mt-30 md:mt-72 px-20">     
         <h1 class="text-5xl md:text-6xl font-semibold">Tentang Kami</h1>
         <div class="border-8 border-[#259E30] w-[22.2rem] -mt-5"></div>
         <p class="text-sm mt-10 md:text-3xl ">

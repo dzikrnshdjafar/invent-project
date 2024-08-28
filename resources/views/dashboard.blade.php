@@ -9,25 +9,25 @@
     <div class="row">
         <!-- Info cards here -->
         <x-statistics.info-card 
-            :title="'Total Items'" 
+            :title="'Barang'" 
             :value="$totalItems" 
             :iconColor="'purple'" 
             :iconClass="'fas fa-boxes'" 
         />
         <x-statistics.info-card 
-            :title="'Total Rooms'" 
+            :title="'Ruangan'" 
             :value="$totalRooms" 
             :iconColor="'blue'" 
             :iconClass="'fas fa-door-open'" 
         />
         <x-statistics.info-card 
-            :title="'Total Loans'" 
+            :title="'Peminjaman'" 
             :value="$totalLoans" 
             :iconColor="'red'" 
             :iconClass="'fas fa-handshake'" 
         />
         <x-statistics.info-card 
-            :title="'Pending Loans'" 
+            :title="'Pending Peminjaman'" 
             :value="$pendingLoansCount" 
             :iconColor="'green'" 
             :iconClass="'fas fa-hourglass-half'" 

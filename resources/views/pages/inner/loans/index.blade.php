@@ -1,4 +1,3 @@
-@section('title', 'Peminjaman')
 <x-app-layout>
     <!-- Alert section -->
     @if (session('success'))
@@ -14,21 +13,23 @@
     @endif
 
     <x-table-card :title="'Daftar Peminjaman'">
-        {{-- @can('Create Loans') --}}
         <x-slot name="headerActions">
-            <div class="justify-content-end">
-                <a href="{{ route('loans.create') }}" class="btn btn-primary mb-0"><i class="bi bi-plus-lg"></i> Buat Peminjaman</a>
-                <a href="{{ route('loans.export.pdf') }}" class="btn btn-danger mb-0"><i class="bi bi-file-earmark-pdf"></i> Export PDF</a>
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <a href="{{ route('loans.create') }}" class="btn btn-primary">
+                    <i class="bi bi-plus-lg"></i> Buat Peminjaman
+                </a>
+                <a href="{{ route('loans.export.pdf') }}" class="btn btn-danger">
+                    <i class="bi bi-file-earmark-pdf"></i> Export PDF
+                </a>
             </div>
         </x-slot>
         
-        {{-- @endcan --}}
         <x-slot name="tableHeader">
             <tr>
                 <th>ID</th>
                 <th>Item</th>
                 @if (Auth::user()->hasRole('Admin'))
-                    <th>User</th> <!-- Only display this column if the user is Admin -->
+                    <th>User</th>
                 @endif
                 <th>Loan Date</th>
                 <th>Return Date</th>
@@ -44,7 +45,7 @@
                     <td>{{ $loan->id }}</td>
                     <td>{{ $loan->item->name }}</td>
                     @if (Auth::user()->hasRole('Admin'))
-                        <td>{{ $loan->user->name }}</td> <!-- Only display this cell if the user is Admin -->
+                        <td>{{ $loan->user->name }}</td>
                     @endif
                     <td>{{ $loan->created_at }}</td>
                     <td>{{ $loan->return_date ?? 'Not returned yet' }}</td>
@@ -61,27 +62,35 @@
                     </td>
                     <td>
                         <!-- Trigger for Detail Modal -->
-                        <button type="button" class="btn btn-light-info" data-bs-toggle="modal" data-bs-target="#loanModal{{ $loan->id }}">
-                            Detail
+                        <button type="button" class="btn btn-light-info me-2 mb-2" data-bs-toggle="modal" data-bs-target="#loanModal{{ $loan->id }}">
+                            <i class="bi bi-info-circle"></i> Detail
                         </button>
                         @can('Edit Loans')
-                        <a href="{{ route('loans.edit', $loan->id) }}" class="btn btn-light-warning">Edit</a>
+                        <a href="{{ route('loans.edit', $loan->id) }}" class="btn btn-light-warning me-2 mb-2">
+                            <i class="bi bi-pencil"></i> Edit
+                        </a>
                         @endcan
                         @can('Delete Loans')
                         <form action="{{ route('loans.destroy', $loan->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-light-danger" onclick="return confirm('Are you sure you want to delete this loan?')">Hapus</button>
+                            <button type="submit" class="btn btn-light-danger me-2 mb-2" onclick="return confirm('Are you sure you want to delete this loan?')">
+                                <i class="bi bi-trash3"></i> Hapus
+                            </button>
                         </form>
                         @endcan
                         @can('Manage Quantities')
                             @if($loan->status == 'pending')
-                                <a href="{{ route('loans.manageQuantities', $loan->id) }}" class="btn btn-primary">Manage Quantities</a>
+                                <a href="{{ route('loans.manageQuantities', $loan->id) }}" class="btn btn-primary me-2 mb-2">
+                                    <i class="bi bi-nut"></i> Manage
+                                </a>
                             @endif
                         @endcan
                         @can('Return Items')
                             @if($loan->status == 'borrowed')
-                                <a href="{{ route('loans.returnItemsForm', $loan->id) }}" class="btn btn-success">Return Items</a>
+                                <a href="{{ route('loans.returnItemsForm', $loan->id) }}" class="btn btn-success mb-2">
+                                    <i class="bi bi-check2-all"></i> Return Items
+                                </a>
                             @endif
                         @endcan
                     </td>
