@@ -17,7 +17,7 @@ class OuterController extends Controller
         });
 
         $goodItemsCount = Item::where('condition', 'Baik')->count();
-        $restoreItemsCount = Item::where('condition', 'Dalam Berbaikan')->count();
+        $restoreItemsCount = Item::where('condition', 'Dalam Perbaikan')->count();
         $damagedItemsCount = Item::where('condition', 'Rusak')->count();
 
         return view('pages.outer.landing-page', [
