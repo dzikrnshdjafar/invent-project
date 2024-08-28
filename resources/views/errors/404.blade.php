@@ -8,7 +8,7 @@
             <h1 class="text-6xl md:text-[8em] font-bold text-gray-900 mt-12 ">404</h1>
             <p class="text-lg md:text-xl text-gray-600 mt-4">HALAMAN TIDAK DITEMUKAN</p>
             <a href="/" class="mt-6 bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-500 font-[Montserrat] text-center">
-                Kembali ke halaman utama
+                Kembali ke halaman utamaaaa
             </a>
         </div>
 
