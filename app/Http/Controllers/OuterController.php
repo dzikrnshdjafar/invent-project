@@ -16,9 +16,9 @@ class OuterController extends Controller
             return $item->rooms->sum('pivot.quantity');
         });
 
-        $goodItemsCount = Item::where('condition', 'baik')->count();
-        $restoreItemsCount = Item::where('condition', 'dalam perbaikan')->count();
-        $damagedItemsCount = Item::where('condition', 'rusak')->count();
+        $goodItemsCount = Item::where('condition', 'Baik')->count();
+        $restoreItemsCount = Item::where('condition', 'Dalam Berbaikan')->count();
+        $damagedItemsCount = Item::where('condition', 'Rusak')->count();
 
         return view('pages.outer.landing-page', [
             "title" => "Data Daerah Irigasi",
