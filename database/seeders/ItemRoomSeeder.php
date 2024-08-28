@@ -23,7 +23,7 @@ class ItemRoomSeeder extends Seeder
 
         foreach ($itemIds as $itemId) {
             // Pilih beberapa ruangan untuk setiap item
-            $roomSubset = $faker->randomElements($roomIds, $faker->numberBetween(1, 5));
+            $roomSubset = $faker->randomElements($roomIds, $faker->numberBetween(1, 2));
 
             foreach ($roomSubset as $roomId) {
                 // Asosiasikan setiap item dengan beberapa ruangan

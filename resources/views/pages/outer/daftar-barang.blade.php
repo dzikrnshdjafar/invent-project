@@ -4,7 +4,7 @@
 
 
 <div class=" text-black flex font-[Poppins] bg-no-repeat bg-cover bg-[url('{{ asset('landpage') }}/asset/objects.svg')]">
-    <div class="container mx-auto -mt-30 md:mt-14">     
+    <div class="container mx-auto -mt-30 md:mt-14 px-20">     
         <h1 class="text-5xl md:text-6xl font-semibold ml-10">Daftar Alat</h1>
         <div class="border-8 border-[#259E30] w-[22.2rem] -mt-5"></div>
 

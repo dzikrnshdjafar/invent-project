@@ -1,4 +1,4 @@
-<nav class="container mx-auto">
+<nav class="container mx-auto px-20">
   <div class="navbar text-white">
       <div class="navbar-start">
         <div class="dropdown">

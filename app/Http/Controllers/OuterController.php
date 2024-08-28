@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Visitor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class OuterController extends Controller
 {
@@ -20,6 +22,25 @@ class OuterController extends Controller
         $restoreItemsCount = Item::where('condition', 'Dalam Perbaikan')->count();
         $damagedItemsCount = Item::where('condition', 'Rusak')->count();
 
+
+        $ipAddress = request()->ip();
+
+        Visitor::firstOrCreate(
+            ['ip_address' => $ipAddress],
+            [
+                'visited_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+        );
+
+        $totalVisitors = Visitor::count();
+
+        // Statistik pengunjung
+        // $totalVisitors = Visitor::count();
+        $todayVisitors = Visitor::whereDate('visited_at', now()->toDateString())->count();
+        $yesterdayVisitors = Visitor::whereDate('visited_at', now()->subDay()->toDateString())->count();
+
         return view('pages.outer.landing-page', [
             "title" => "Data Daerah Irigasi",
             "items" => $items,
@@ -27,6 +48,9 @@ class OuterController extends Controller
             "itemsDalamPerbaikan" => $restoreItemsCount,
             "itemsRusak" => $damagedItemsCount,
             "totalItems" => $totalItems,
+            "totalVisitors" => $totalVisitors,
+            "todayVisitors" => $todayVisitors,
+            "yesterdayVisitors" => $yesterdayVisitors,
         ]);
     }
 

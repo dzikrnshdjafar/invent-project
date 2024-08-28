@@ -21,16 +21,16 @@ class RoomSeeder extends Seeder
             'name' => 'Gudang 2',
         ]);
 
-        Room::create([
-            'name' => 'Gudang 3',
-        ]);
+        // Room::create([
+        //     'name' => 'Gudang 3',
+        // ]);
 
-        Room::create([
-            'name' => 'Gudang 4',
-        ]);
+        // Room::create([
+        //     'name' => 'Gudang 4',
+        // ]);
 
-        Room::create([
-            'name' => 'Gudang 5',
-        ]);
+        // Room::create([
+        //     'name' => 'Gudang 5',
+        // ]);
     }
 }

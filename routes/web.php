@@ -13,7 +13,13 @@ use App\Http\Controllers\ProfileController;
 //     return view('layouts.outer.landing-page');
 // });
 
-Route::get('/', [OuterController::class, 'index']);
+Route::middleware('web')->group(function () {
+    Route::get('/', [OuterController::class, 'index']);
+});
+
+
+
+
 Route::get('/barang', [OuterController::class, 'daftar']);
 
 Route::get('/dashboard', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');

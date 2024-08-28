@@ -44,14 +44,14 @@
                 <li class="sidebar-item {{ request()->routeIs('items.*') ? 'active' : '' }}">
                     <a href="{{ route('items.index') }}" class='sidebar-link'>
                         <i class="fas fa-boxes"></i>
-                        <span>Items</span>
+                        <span>Barang</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item {{ request()->routeIs('rooms.*') ? 'active' : '' }}">
                     <a href="{{ route('rooms.index') }}" class='sidebar-link'>
                         <i class="fas fa-door-open"></i>
-                        <span>Rooms</span>
+                        <span>Ruangan</span>
                     </a>
                 </li>
                 @endhasrole
@@ -60,7 +60,7 @@
                 <li class="sidebar-item {{ request()->routeIs('loans.*') ? 'active' : '' }}">
                     <a href="{{ route('loans.index') }}" class='sidebar-link'>
                         <i class="fas fa-handshake"></i>
-                        <span>Loans</span>
+                        <span>Peminjaman</span>
                         @if(isset($pendingLoansCount) && $pendingLoansCount > 0)
                             <span class="badge bg-light-secondary">{{ $pendingLoansCount }}</span>
                         @endif
@@ -73,7 +73,7 @@
                 <li class="sidebar-item">
                     <a href="{{ route('profile.edit') }}" class='sidebar-link'>
                         <i class="fas fa-lock"></i>
-                        <span>Security</span>
+                        <span>Keamanan</span>
                     </a>
                 </li>
             </ul>
