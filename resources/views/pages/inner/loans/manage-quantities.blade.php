@@ -35,7 +35,8 @@
                 <div id="rooms-wrapper">
                     @foreach ($rooms as $index => $room)
                         @php
-                            $availableQuantity = $room->items->first() ? $room->items->first()->pivot->quantity : 0;
+                             // Ambil quantity dari pivot table berdasarkan item yang sedang dikelola
+                        $availableQuantity = $room->pivot->quantity ?? 0;
                         @endphp
                         <div class="room-quantity-group mb-2">
                             <label>{{ $room->name }} (Available: {{ $availableQuantity }})</label>

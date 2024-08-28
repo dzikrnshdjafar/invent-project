@@ -76,6 +76,16 @@
                         <span>Keamanan</span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class='sidebar-link'>
+                            <i class="fas fa-arrow-circle-right"></i>
+                            <span>Logout</span>
+                        </button>
+                    </form>
+                </li>
+                
             </ul>
         </div>
     </div>

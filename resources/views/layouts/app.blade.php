@@ -71,14 +71,13 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                         <div class="px-4 py-2">
-                            <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                            <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                            <div class="font-medium"><code>{{ Auth::user()->email }}</code></div>
                         </div>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Profile') }}</a>
                         <form method="POST" action="{{ route('logout') }}" class="dropdown-item p-0">
                             @csrf
-                            <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('Log Out') }}</button>
+                            <button type="submit" class="dropdown-item">{{ __('Log Out') }}</button>
                         </form>
                     </div>
                 </div>

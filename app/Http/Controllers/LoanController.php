@@ -158,12 +158,18 @@ class LoanController extends Controller
 
     public function manageQuantities(Loan $loan)
     {
-        $rooms = Room::whereHas('items', function ($query) use ($loan) {
-            $query->where('item_id', $loan->item_id);
-        })->get();
+        // $rooms = Room::whereHas('items', function ($query) use ($loan) {
+        //     $query->where('item_id', $loan->item_id);
+        // })->get();
+
+        // Ambil item yang berhubungan dengan loan, beserta data rooms
+        $item = $loan->item()->with('rooms')->first();
 
         // Ambil data loan_quantity dari tabel loans
         $loanQuantities = $loan->quantity;
+
+        // Ambil rooms yang terkait dengan item ini
+        $rooms = $item ? $item->rooms : collect();
 
         return view('pages.inner.loans.manage-quantities', compact('loan', 'rooms', 'loanQuantities'));
     }
