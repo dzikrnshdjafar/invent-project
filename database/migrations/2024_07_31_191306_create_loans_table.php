@@ -15,11 +15,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('item_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('nama_peminjam');
+            $table->string('alamat');
+            $table->string('nip_nik');
             $table->string('no_hp');
+            $table->text('keterangan')->nullable();
             $table->integer('loan_duration')->nullable();
             $table->integer('quantity');
             $table->date('return_date')->nullable();
-            $table->string('status')->default('borrowed'); // Status can be 'borrowed' or 'returned'
+            $table->string('status'); // Status can be 'borrowed' or 'returned'
             $table->timestamps();
         });
     }

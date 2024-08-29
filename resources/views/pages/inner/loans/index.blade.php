@@ -28,9 +28,10 @@
             <tr>
                 <th>ID</th>
                 <th>Item</th>
-                @if (Auth::user()->hasRole('Admin'))
+                {{-- @if (Auth::user()->hasRole('Admin'))
                     <th>User</th>
-                @endif
+                @endif --}}
+                <th>Peminjam</th>
                 <th>Loan Date</th>
                 <th>Return Date</th>
                 <th>Duration (days)</th>
@@ -44,18 +45,19 @@
                 <tr>
                     <td>{{ $loan->id }}</td>
                     <td>{{ $loan->item->name }}</td>
-                    @if (Auth::user()->hasRole('Admin'))
+                    {{-- @if (Auth::user()->hasRole('Admin'))
                         <td>{{ $loan->user->name }}</td>
-                    @endif
+                    @endif --}}
+                    <td>{{ $loan->nama_peminjam }}</td>
                     <td>{{ $loan->created_at }}</td>
                     <td>{{ $loan->return_date ?? 'Not returned yet' }}</td>
                     <td>{{ $loan->loan_duration }}</td>
                     <td>{{ $loan->quantity }}</td>
                     <td>
-                        @if($loan->status == 'borrowed')
-                            <span class="badge bg-light-warning">Borrowed</span>
-                        @elseif($loan->status == 'returned')
-                            <span class="badge bg-light-success">Returned</span>
+                        @if($loan->status == 'dipinjam')
+                            <span class="badge bg-light-warning">Dipinjam</span>
+                        @elseif($loan->status == 'dikembalikan')
+                            <span class="badge bg-light-success">Dikembalikan</span>
                         @else
                             <span class="badge bg-light-secondary">{{ ucfirst($loan->status) }}</span>
                         @endif
@@ -82,14 +84,14 @@
                         @can('Manage Quantities')
                             @if($loan->status == 'pending')
                                 <a href="{{ route('loans.manageQuantities', $loan->id) }}" class="btn btn-primary me-2 mb-2">
-                                    <i class="bi bi-nut"></i> Manage
+                                    <i class="bi bi-nut"></i> Atur
                                 </a>
                             @endif
                         @endcan
                         @can('Return Items')
-                            @if($loan->status == 'borrowed')
+                            @if($loan->status == 'dipinjam')
                                 <a href="{{ route('loans.returnItemsForm', $loan->id) }}" class="btn btn-success mb-2">
-                                    <i class="bi bi-check2-all"></i> Return Items
+                                    <i class="bi bi-check2-all"></i> Kembalikan Barang
                                 </a>
                             @endif
                         @endcan

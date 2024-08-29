@@ -2,14 +2,25 @@
 
 <x-detail-modal :modalId="'itemModal'.$item->id" :modalTitle="$item->name">
     <x-slot name="slot">
-        <p><strong>Description: </strong>{{ $item->description }}</p>
-        <p><strong>Rooms and Quantities: </strong></p>
+        @if ($item->image)
+    <div class="mb-3 text-center">
+        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="img-fluid d-block mx-auto">
+    </div>
+@endif
+
+
+        <p><strong>Deskripsi: </strong>{{ $item->description ?? 'No description available' }}</p>
+        <p><strong>Kondisi: </strong>{{ ucfirst($item->condition) ?? 'Unknown' }}</p>
+        <p><strong>Kategori: </strong>{{ ucfirst($item->category) ?? 'Uncategorized' }}</p>
+
+        <p><strong>Kuantitas dalam ruangan: </strong></p>
         <ul>
             @foreach ($item->rooms as $room)
                 <li>{{ $room->name }}: {{ $room->pivot->quantity }}</li>
             @endforeach
         </ul>
     </x-slot>
+
     <x-slot name="footer">
         <a href="{{ route('items.edit', $item->id) }}" class="btn btn-warning">Edit</a>
         <form action="{{ route('items.destroy', $item->id) }}" method="POST" style="display:inline;">

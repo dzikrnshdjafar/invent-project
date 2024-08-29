@@ -21,7 +21,7 @@ class ItemController extends Controller
         });
 
         // Hitung jumlah item yang dipinjam dari tabel loans
-        $borrowedItems = Loan::where('status', 'borrowed')->sum('quantity');
+        $borrowedItems = Loan::where('status', 'dipinjam')->sum('quantity');
 
         return view('pages.inner.items.index', compact('items', 'totalItems', 'borrowedItems'));
     }
@@ -158,7 +158,7 @@ class ItemController extends Controller
 
         // Periksa apakah ada pinjaman dengan status 'borrowed' untuk item ini
         $loanExists = Loan::where('item_id', $item->id)
-            ->where('status', 'borrowed')
+            ->where('status', 'dipinjam')
             ->exists();
 
         if ($loanExists) {
@@ -167,7 +167,7 @@ class ItemController extends Controller
 
         // Periksa apakah ada pinjaman dengan status 'returned' untuk item ini
         $returnedLoans = Loan::where('item_id', $item->id)
-            ->where('status', 'returned')
+            ->where('status', 'dikembalikan')
             ->count();
 
         // Hapus gambar dari storage jika ada

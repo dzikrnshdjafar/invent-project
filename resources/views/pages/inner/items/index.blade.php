@@ -45,7 +45,7 @@
                         <th>Kondisi</th>
                         <th>Gambar</th>
                         <th>Jumlah</th>
-                        <th>Actions</th>
+                        <th>Aksi</th>
                     </tr>
                 </x-slot>
                 <x-slot name="tableBody">

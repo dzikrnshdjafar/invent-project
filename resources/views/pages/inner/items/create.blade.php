@@ -1,7 +1,7 @@
 @section('title', 'Tambah Barang')
 
 <x-app-layout>
-    <x-form-card :title="'Add Item'" :backLink="route('items.index')">
+    <x-form-card :title="'Form Tambah Barang'" :backLink="route('items.index')">
 
         <!-- Flash Messages for Success and Error -->
         @if (session('success'))
@@ -27,17 +27,17 @@
 
             <!-- Fields for Name, Description, Condition, Category, and Image -->
             <div class="form-group">
-                <label for="name">Name</label>
+                <label for="name">Nama</label>
                 <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}" required>
             </div>
 
             <div class="form-group">
-                <label for="description">Description</label>
+                <label for="description">Deskripsi</label>
                 <textarea name="description" class="form-control" id="description">{{ old('description') }}</textarea>
             </div>
 
             <div class="form-group">
-                <label for="condition">Condition</label>
+                <label for="condition">Kondisi</label>
                 <select name="condition" class="form-select" id="condition" required>
                     <option value="Baik" {{ old('condition') == 'Baik' ? 'selected' : '' }}>Baik</option>
                     <option value="Rusak" {{ old('condition') == 'Rusak' ? 'selected' : '' }}>Rusak</option>
@@ -46,7 +46,7 @@
             </div>
             
             <div class="form-group">
-                <label for="category">Category</label>
+                <label for="category">Kategori</label>
                 <select name="category" class="form-select" id="category" required>
                     <option value="Bisa Dipinjamkan" {{ old('category') == 'Bisa Dipinjamkan' ? 'selected' : '' }}>Bisa Dipinjamkan</option>
                     <option value="Tidak Bisa Dipinjamkan" {{ old('category') == 'Tidak Bisa Dipinjamkan' ? 'selected' : '' }}>Tidak Bisa Dipinjamkan</option>
@@ -55,7 +55,7 @@
             
 
             <div class="form-group">
-                <label for="image">Upload Image</label>
+                <label for="image">Upload Gambar</label>
                 <input type="file" name="image" class="form-control" id="image" required>
                 <div class="mt-3">
                     <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 200px;" />
@@ -64,7 +64,7 @@
 
             <!-- Rooms and Quantities Fields -->
             <div class="form-group">
-                <label>Rooms and Quantities</label>
+                <label>Kuantitas</label>
                 <div id="rooms-wrapper">
                     @foreach ($rooms as $index => $room)
                         <div class="room-quantity-group">

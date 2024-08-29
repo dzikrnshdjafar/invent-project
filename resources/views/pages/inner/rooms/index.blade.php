@@ -10,8 +10,8 @@
         <x-slot name="tableHeader">
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Actions</th>
+                <th>Nama</th>
+                <th>Aksi</th>
             </tr>
         </x-slot>
         <x-slot name="tableBody">

@@ -3,7 +3,7 @@
 
 <x-detail-modal :modalId="'roomModal'.$room->id" :modalTitle="$room->name">
     <x-slot name="slot">
-        <p><strong>Name:</strong> {{ $room->name }}</p>
+        <p><strong>Nama:</strong> {{ $room->name }}</p>
     </x-slot>
     <x-slot name="footer">
         <a href="{{ route('rooms.index') }}" class="btn btn-secondary">Close</a>

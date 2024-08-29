@@ -62,9 +62,13 @@ class LoanController extends Controller
 
         $request->validate([
             'item_id' => 'required|exists:items,id',
+            'nama_peminjam' => 'required|string|max:255',
+            'alamat' => 'required|string',
+            'nip_nik' => 'required|string|max:255',
+            'no_hp' => 'required|string|max:20',
+            'keterangan' => 'nullable|string',
             'loan_duration' => 'required|integer|min:1',
             'quantity' => 'required|integer|min:1',
-            'no_hp' => 'required',
         ]);
 
         $item = Item::with('rooms')->findOrFail($request->item_id);
@@ -77,10 +81,14 @@ class LoanController extends Controller
         $loan = Loan::create([
             'item_id' => $request->item_id,
             'user_id' => auth()->id(),
+            'nama_peminjam' => $request->nama_peminjam,
+            'alamat' => $request->alamat,
+            'nip_nik' => $request->nip_nik,
+            'no_hp' => $request->no_hp,
+            'keterangan' => $request->keterangan,
             'loan_duration' => $request->loan_duration,
             'quantity' => $request->quantity,
-            'no_hp' => $request->no_hp,
-            'status' => 'pending',
+            'status' => 'pending',  // Set default status as 'pending'
         ]);
 
         // // Ensure loan_duration is an integer
@@ -117,14 +125,28 @@ class LoanController extends Controller
 
         $request->validate([
             'item_id' => 'required|exists:items,id',
+            'nama_peminjam' => 'required|string|max:255',
+            'alamat' => 'required|string',
+            'nip_nik' => 'required|string|max:255',
+            'no_hp' => 'required|string|max:20',
+            'keterangan' => 'nullable|string',
             'loan_duration' => 'nullable|integer|min:1',
-            'status' => 'required|in:pending,borrowed,returned',
+            'quantity' => 'required|integer|min:1',
+            'status' => 'required|in:pending,dipinjam,dikembalikan',
         ]);
+
+        $item = Item::with('rooms')->findOrFail($request->item_id);
+        $availableQuantity = $item->rooms->sum('pivot.quantity');
+
+        if ($request->quantity > $availableQuantity) {
+            return redirect()->back()->with('error', 'Insufficient item quantity.');
+        }
 
         $loan->update($request->all());
 
         return redirect()->route('loans.index')->with('success', 'Loan updated successfully.');
     }
+
 
     public function destroy(Loan $loan)
     {
@@ -133,8 +155,8 @@ class LoanController extends Controller
             abort(403);
         }
 
-        // Cek apakah status pinjaman masih 'borrowed'
-        if ($loan->status == 'borrowed') {
+        // Cek apakah status pinjaman masih 'dipijman'
+        if ($loan->status == 'dipinjam') {
             return redirect()->route('loans.index')->with('error', 'Loan cannot be deleted while it is still borrowed.');
         }
 
@@ -202,7 +224,7 @@ class LoanController extends Controller
                 }
             }
 
-            $loan->update(['status' => 'borrowed']);
+            $loan->update(['status' => 'dipinjam']);
         });
 
         $loanDuration = $loan->loan_duration;
@@ -247,7 +269,7 @@ class LoanController extends Controller
                 }
             }
 
-            $loan->update(['status' => 'returned']);
+            $loan->update(['status' => 'dikembalikan']);
             $loan->update(['return_date' => now()]);
         });
 

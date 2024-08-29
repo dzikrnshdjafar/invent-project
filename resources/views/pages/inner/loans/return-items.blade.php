@@ -23,14 +23,14 @@
             @method('PUT')
             <div class="form-group">
                 <div class="text-center mb-2">
-                    <h5>Loan Quantities</h5>
+                    <h5>Jumlah Barang Yang Dipinjam</h5>
                     <h1>
                         <span id="loan-quantities-badge" class="badge bg-light-danger">
                             {{ $loanQuantities }}
                         </span>
                     </h1>
                 </div>
-                <label>Rooms and Quantities</label>
+                <label>Kuantitas dalam Ruangan</label>
                 <div id="rooms-wrapper">
                     @foreach ($rooms as $index => $room)
                         <div class="room-quantity-group mb-2">
