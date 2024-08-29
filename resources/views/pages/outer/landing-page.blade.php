@@ -7,17 +7,25 @@
             <h1 class="text-4xl md:text-[80px] font-semibold font-[Poppins] leading-tight">
                 Optimalkan Pertanian Anda dengan Alat yang Tepat.
             </h1>
-            <div class="bg-white rounded-3xl flex items-center shadow-lg mt-10 max-w-3xl mx-auto">
-                <input type="text" class="bg-transparent p-3 text-gray-800 focus:outline-none flex-grow">
-                <button class="p-2 text-white rounded-3xl hover:bg-green-600 mr-1" style="background-color:#146B1C;">
-                    <i class="fa-solid fa-magnifying-glass p-1"></i>Search
-                </button>
+            <div class="bg-white rounded-3xl flex shadow-lg mt-10 max-w-3xl mx-auto">
+                <form id="searchForm" action="{{ route('daftar-barang') }}" method="GET" class="flex w-full items-center">
+                    <input type="text" id="searchInput" name="search" placeholder="Cari barang..." class="bg-transparent py-2 px-3 text-gray-800 focus:outline-none flex-1">
+                    <button type="submit" class="px-4 py-1.5 text-sm text-white rounded-3xl hover:bg-green-600 mr-1.5" style="background-color:#146B1C;">
+                        <i class="fa-solid fa-magnifying-glass"></i> Search
+                    </button>
+                </form>
             </div>
+            
+            
+            
+            
+            
+
         </div>
     </div>
 </div>
 
-<div class="container mx-auto grid grid-cols-3 md:grid-cols-3 gap-5 md:gap-9 -mt-60 px-20">
+<div class="container mx-auto grid grid-cols-3 md:grid-cols-3 gap-5 md:gap-9 -mt-60 md:px-20">
     <div class="card bg-[#1A4D2E] h-28 md:h-96 shadow-xl relative">
         <div class="card-body p-3 md:p-8 flex flex-col">
             <img src="{{ asset('landpage') }}/asset/ri_plant-fill.svg" alt="Jumlah Alat" class="w-6 h-6 md:h-16 md:w-16 md:mb-8">
@@ -49,7 +57,7 @@
 </div>
 
 <div class="md:h-screen text-black flex font-[Poppins] mt-40 md:-mt-40 bg-no-repeat bg-cover bg-[url('{{ asset('landpage') }}/asset/objects.svg')]">
-    <div class="container mx-auto -mt-30 md:mt-72 px-20">     
+    <div class="container mx-auto -mt-30 md:mt-72 md:px-20">     
         <h1 class="text-5xl md:text-6xl font-semibold">Tentang Kami</h1>
         <div class="border-8 border-[#259E30] w-[22.2rem] -mt-5"></div>
         <p class="text-sm mt-10 md:text-3xl ">
@@ -60,4 +68,15 @@
         </p>
     </div>
 </div>
+<script>
+    // Validasi form pencarian
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        const searchInput = document.getElementById('searchInput').value.trim();
+
+        // Cek apakah input search kosong
+        if (searchInput === "") {
+            event.preventDefault(); // Mencegah form dari submit
+        }
+    });
+</script>
 @endsection

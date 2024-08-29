@@ -1,5 +1,5 @@
 <footer class="text-white bg-[#001C0B] mt-10 relative z-10">
-    <div class="container mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-4 py-24 px-20">
+    <div class="container mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-4 py-24 md:px-20">
         <!-- Kontak Kami Section -->
         <div class="mb-8">
             <h3 class="font-bold text-lg mb-4 title-with-border">Kontak Kami</h3>
@@ -24,7 +24,7 @@
     
 
     <div class="border-t border-grey p-3">
-        <div class="container mx-auto p-4 flex justify-between items-center px-20">
+        <div class="container mx-auto p-4 flex justify-between items-center md:px-20">
             <!-- Copyright Section -->
             <p class="text-sm">
                 Copyrights © 2024 - <span class="font-bold">Badan Standardisasi Instrumen Pertanian, <br>Kementerian Pertanian Gorontalo</span>, all Rights Reserved.

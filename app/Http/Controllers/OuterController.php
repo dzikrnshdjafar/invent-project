@@ -36,12 +36,22 @@ class OuterController extends Controller
 
 
 
-    public function daftar()
+    public function daftar(Request $request)
     {
-        $items = Item::paginate(8); // Ganti 8 dengan jumlah item per halaman yang Anda inginkan
+        $search = $request->input('search');
+
+        // Lakukan pencarian berdasarkan nama barang
+        $query = Item::query();
+
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        $items = $query->paginate(8);
 
         return view('pages.outer.daftar-barang', [
-            "items" => $items
+            "items" => $items,
+            "search" => $search
         ]);
     }
 }

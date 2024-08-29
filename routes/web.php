@@ -16,7 +16,7 @@ use App\Http\Controllers\ProfileController;
 
 Route::get('/', [OuterController::class, 'index']);
 
-Route::get('/barang', [OuterController::class, 'daftar']);
+Route::get('/barang', [OuterController::class, 'daftar'])->name('daftar-barang');
 
 Route::get('/dashboard', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
