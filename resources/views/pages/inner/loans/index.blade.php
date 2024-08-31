@@ -16,7 +16,7 @@
    <!-- Collapse Button -->
    <div class="mb-3 tw-flex tw-justify-end">
     <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#filterForm" aria-expanded="false" aria-controls="filterForm">
-        <i class="bi bi-filter"></i> Filter Tanggal
+        <i class="bi bi-calendar2-range"></i> Filter Tanggal
     </button>
 </div>
 
