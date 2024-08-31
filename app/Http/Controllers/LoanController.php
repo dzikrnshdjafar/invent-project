@@ -322,16 +322,27 @@ class LoanController extends Controller
         return view('pages.inner.loans.return-items', compact('loan', 'rooms', 'loanQuantities'));
     }
 
-    public function exportPDF()
+    public function exportPDF(Request $request)
     {
-        $loans = Loan::with(['item' => function ($query) {
-            $query->withTrashed();
-        }, 'user'])->get();
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
+        // Base query
+        $query = Loan::with(['item' => function ($query) {
+            $query->withTrashed();
+        }, 'user']);
+
+        // Terapkan filter tanggal
+        $query = $this->filterLoans($query, $startDate, $endDate);
+
+        // Ambil data loans yang telah difilter
+        $loans = $query->get();
+
+        // Render view menjadi HTML untuk PDF
         $html = view('pages.inner.loans.pdf', compact('loans'))->render();
 
-        $mpdf = new Mpdf();
-
+        // Buat dan download PDF
+        $mpdf = new \Mpdf\Mpdf();
         $mpdf->WriteHTML($html);
         $mpdf->Output('loans.pdf', 'D'); // 'D' untuk download, bisa diganti dengan 'I' untuk inline
 

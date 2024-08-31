@@ -22,7 +22,7 @@
 
 
      <!-- Filter Form -->
-     <div class="card collapse" id="filterForm">
+     <div class="card collapse {{ request('start_date') || request('end_date') ? 'show' : '' }}" id="filterForm">
         <form action="{{ route('loans.index') }}" method="GET" class="tw-flex tw-flex-col md:tw-flex-row tw-p-6 gap-4 tw-justify-center">
             <div class="tw-flex tw-flex-row gap-4 tw-w-full">
                 <div class="tw-flex-1 w-1/3">
@@ -47,9 +47,13 @@
                 <a href="{{ route('loans.create') }}" class="btn btn-primary">
                     <i class="bi bi-plus-lg"></i> Buat Peminjaman
                 </a>
-                <a href="{{ route('loans.export.pdf') }}" class="btn btn-danger">
+                <a href="{{ route('loans.export.pdf', ['start_date' => request('start_date'), 'end_date' => request('end_date')]) }}" class="btn btn-danger">
                     <i class="bi bi-file-earmark-pdf"></i> Export PDF
                 </a>
+                
+                {{-- <a href="{{ route('loans.export.pdf') }}" class="btn btn-danger">
+                    <i class="bi bi-file-earmark-pdf"></i> Export PDF
+                </a> --}}
             </div>
         </x-slot>
         
@@ -131,3 +135,20 @@
         </x-slot>
     </x-table-card>
 </x-app-layout>
+@push('scripts')
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Jika ada nilai di filter (start_date atau end_date), pastikan form tetap terbuka
+        let startDate = "{{ request('start_date') }}";
+        let endDate = "{{ request('end_date') }}";
+        
+        if (startDate || endDate) {
+            let filterForm = new bootstrap.Collapse(document.getElementById('filterForm'), {
+                toggle: true
+            });
+            filterForm.show();
+        }
+    });
+</script>
+@endpush
+
