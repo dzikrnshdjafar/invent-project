@@ -46,9 +46,13 @@
     <link rel="stylesheet" href="{{ asset('mzr') }}/assets/compiled/css/app-dark.css">
     <link rel="stylesheet" href="{{ asset('mzr') }}/assets/compiled/css/iconly.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    {{-- <link rel="stylesheet" href="{{ asset('mzr') }}/assets/extensions/simple-datatables/style.css">
-    <link rel="stylesheet" crossorigin href="{{ asset('mzr') }}/assets/compiled/css/table-datatable.css"> --}}
     <link rel="stylesheet" href="{{ asset('mzr') }}/assets/extensions/@fortawesome/fontawesome-free/css/all.min.css">
+    <script>
+        tailwind.config = {
+          prefix: 'tw-',
+        }
+      </script>
+    
 </head>
 <body>
     <script src="{{ asset('mzr') }}/assets/static/js/initTheme.js"></script>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use PDF;
 use Mpdf\Mpdf;
+use Carbon\Carbon;
 use App\Models\Item;
 use App\Models\Loan;
 use App\Models\Room;
@@ -16,26 +17,52 @@ use Illuminate\Support\Facades\Gate;
 
 class LoanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
 
-        if ($user->hasRole('Admin')) {
-            $loans = Loan::with(['item' => function ($query) {
-                $query->withTrashed();
-            }, 'user'])->get();
-        } else {
-            $loans = Loan::with(['item' => function ($query) {
-                $query->withTrashed();
-            }, 'user'])
-                ->where('user_id', $user->id)
-                ->get();
+        // Ambil start date dan end date dari request
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Base query
+        $query = Loan::with(['item' => function ($query) {
+            $query->withTrashed();
+        }, 'user']);
+
+        // Filter by user_id jika bukan admin
+        if (!$user->hasRole('Admin')) {
+            $query->where('user_id', $user->id);
         }
+
+        // Terapkan filter tanggal menggunakan metode filterLoans
+        $query = $this->filterLoans($query, $startDate, $endDate);
+
+        // Ambil data loans
+        $loans = $query->get();
 
         $pendingLoansCount = Loan::where('status', 'pending')->count();
 
         return view('pages.inner.loans.index', compact('loans', 'pendingLoansCount'));
     }
+
+
+    public function filterLoans($query, $startDate, $endDate)
+    {
+        if ($startDate && $endDate) {
+            $query->whereBetween('created_at', [
+                Carbon::parse($startDate)->startOfDay(),
+                Carbon::parse($endDate)->endOfDay()
+            ]);
+        } elseif ($startDate) {
+            $query->where('created_at', '>=', Carbon::parse($startDate)->startOfDay());
+        } elseif ($endDate) {
+            $query->where('created_at', '<=', Carbon::parse($endDate)->endOfDay());
+        }
+
+        return $query;
+    }
+
 
     public function create()
     {

@@ -13,6 +13,33 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+   <!-- Collapse Button -->
+   <div class="mb-3 tw-flex tw-justify-end">
+    <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#filterForm" aria-expanded="false" aria-controls="filterForm">
+        <i class="bi bi-filter"></i> Filter Tanggal
+    </button>
+</div>
+
+
+     <!-- Filter Form -->
+     <div class="card collapse" id="filterForm">
+        <form action="{{ route('loans.index') }}" method="GET" class="tw-flex tw-flex-col md:tw-flex-row tw-p-6 gap-4 tw-justify-center">
+            <div class="tw-flex tw-flex-row gap-4 tw-w-full">
+                <div class="tw-flex-1 w-1/3">
+                    <label for="start_date" class="form-label">Tanggal Mulai</label>
+                    <input type="date" name="start_date" id="start_date" class="form-control w-full" value="{{ request('start_date') }}">
+                </div>
+                <div class="tw-flex-1 w-1/3">
+                    <label for="end_date" class="form-label">Tanggal Akhir</label>
+                    <input type="date" name="end_date" id="end_date" class="form-control w-full" value="{{ request('end_date') }}">
+                </div>
+            </div>
+                <div class="tw-flex gap-4 tw-items-end">
+                    <button type="submit" class="btn btn-primary tw-w-24"><i class="bi bi-calendar2-range"></i> Filter</button>
+                    <a href="{{ route('loans.index') }}" class="btn btn-secondary"><i class="bi bi-arrow-repeat"></i></a>
+            </div>
+        </form>
+    </div>    
 
     <x-table-card :title="'Daftar Peminjaman'">
         <x-slot name="headerActions">
