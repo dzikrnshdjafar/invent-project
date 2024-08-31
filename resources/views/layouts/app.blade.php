@@ -41,7 +41,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Dashboard') - Mazer Admin Dashboard</title>
 
-    <link rel="shortcut icon" href="{{ asset('mzr') }}/assets/compiled/svg/favicon.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('landpage') }}/asset/logonotext.png" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('mzr') }}/assets/compiled/css/app.css">
     <link rel="stylesheet" href="{{ asset('mzr') }}/assets/compiled/css/app-dark.css">
     <link rel="stylesheet" href="{{ asset('mzr') }}/assets/compiled/css/iconly.css">

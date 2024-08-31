@@ -3,8 +3,14 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
-                    <a href="{{ route('dashboard') }}"><img src="{{ asset('mzr/assets/compiled/svg/logo.svg') }}" alt="Logo"></a>
+                    <a href="{{ route('dashboard') }}">
+                        <div class="d-flex align-items-center gap-2">
+                        <img src="{{ asset('landpage') }}/asset/logonotext.png" alt="Logo" class="w-8 h-auto">
+                        <span class="fs-5">Inventaris</span>
+                        </div>
+                    </a>
                 </div>
+                
                 <div class="theme-toggle d-flex gap-2 align-items-center mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20" viewBox="0 0 21 21">
                         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">

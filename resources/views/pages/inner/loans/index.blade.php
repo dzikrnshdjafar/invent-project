@@ -1,3 +1,5 @@
+@section('title', 'Peminjaman')
+
 <x-app-layout>
     <!-- Alert section -->
     @if (session('success'))

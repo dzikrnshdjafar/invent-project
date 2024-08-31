@@ -1,3 +1,5 @@
+@section('title', 'Barang')
+
 <x-app-layout>
     <section class="row">
         <div class="col-12">
