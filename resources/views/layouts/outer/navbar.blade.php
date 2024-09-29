@@ -1,3 +1,4 @@
+<header class="relative bg-[#1A4D2E] z-10">
 <nav class="container mx-auto md:px-20">
   <div class="navbar text-white">
       <div class="navbar-start">
@@ -18,16 +19,10 @@
           </div>
           <ul
             tabindex="0"
-            class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+            class="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow">
             <li><a href="/">Home</a></li>
+            <li><a href="profile-bsip">Profile</a></li>
             <li><a href="barang">Daftar Alat</a></li>
-            <li>
-              <a>Kategori Alat</a>
-              <ul class="p-2">
-                <li><a>Submenu 1</a></li>
-                <li><a>Submenu 2</a></li>
-              </ul>
-            </li>
           </ul>
         </div>
         <a href="/">
@@ -37,16 +32,8 @@
       <div class="navbar-end">
           <ul class="menu menu-horizontal px-1 hidden lg:flex">
               <li><a href="/">Home</a></li>
+              <li><a href="profile-bsip">Profile</a></li>
               <li><a href="barang">Daftar Alat</a></li>
-              <li>
-                <details>
-                  <summary>Kategori Alat</summary>
-                  <ul class="p-2">
-                    <li><a>Submenu 1</a></li>
-                    <li><a>Submenu 2</a></li>
-                  </ul>
-                </details>
-              </li>
             </ul>
 
           @auth
@@ -59,3 +46,4 @@
       </div>
     </div>
 </nav>
+</header>

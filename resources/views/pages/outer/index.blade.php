@@ -13,9 +13,8 @@
 </head>
 <body class="bg-white font-[Nunito] text-white">
         
-        <header class="bg-[#1A4D2E]">
             @include('layouts.outer.navbar')
-        </header>
+
         
         
         @yield('content')

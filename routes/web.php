@@ -15,7 +15,7 @@ use App\Http\Controllers\ProfileController;
 
 
 Route::get('/', [OuterController::class, 'index']);
-
+Route::get('/profile-bsip', [OuterController::class, 'profile'])->name('profile-bsip');
 Route::get('/barang', [OuterController::class, 'daftar'])->name('daftar-barang');
 
 Route::get('/dashboard', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');

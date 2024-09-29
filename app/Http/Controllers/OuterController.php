@@ -54,4 +54,9 @@ class OuterController extends Controller
             "search" => $search
         ]);
     }
+
+    public function profile(Request $request)
+    {
+        return view('pages.outer.profile-bsip');
+    }
 }
