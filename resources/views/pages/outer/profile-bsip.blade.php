@@ -24,9 +24,11 @@
                      <p>merupakan unit pelaksana teknis di bawah Kementerian Pertanian Republik Indonesia yang memiliki tugas untuk menyusun, mengembangkan, dan menerapkan standar serta instrumen di sektor pertanian. <strong>BSIP Gorontalo</strong> berperan penting dalam mendukung peningkatan produktivitas pertanian melalui pengembangan teknologi, penyediaan alat dan mesin pertanian yang terstandarisasi, serta program-program pelatihan yang berorientasi pada kemajuan petani lokal. Dengan dedikasi yang kuat, kami berkomitmen untuk memajukan pertanian berkelanjutan dan mendukung ketahanan pangan nasional.</p>
                      <p class="text-lg font-bold mt-6">Kunjungi Website Utama BSIP Gorontalo </p>
 
-                     <button class="rounded-lg py-6 px-[7rem] bg-[#429C4A] mt-4">
-                         <a href="https://gorontalo.bsip.pertanian.go.id/ "></a>
-                        </button>
+                     <a href="https://gorontalo.bsip.pertanian.go.id/">
+                     <button class="rounded-lg px-9 bg-[#429C4A] mt-4">
+                        <img src="{{ asset("landpage") }}/asset/logo_light.png" alt="Logo" class="h-12 w-auto">
+                    </button>
+                </a>
                 </div>
             </div>
         </div>
