@@ -1,5 +1,5 @@
 <header class="relative bg-[#1A4D2E] z-10">
-<nav class="container mx-auto md:px-20">
+<nav class="container mx-auto md:px-40">
   <div class="navbar text-white">
       <div class="navbar-start">
         <div class="dropdown">

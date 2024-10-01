@@ -3,7 +3,7 @@
 @section('content')
 <div class="hero min-h-screen bg-no-repeat bg-[left_bottom_3rem] bg-cover bg-[url('{{ asset('landpage') }}/asset/bg.png')]">
     <div class="hero-content text-center text-white -mt-40 flex flex-col items-center justify-center">
-        <div class="max-w-7xl">
+        <div class="max-w-6xl">
             <h1 class="text-4xl md:text-[80px] font-semibold font-[Poppins] leading-tight">
                 Optimalkan Pertanian Anda dengan Alat yang Tepat.
             </h1>
@@ -25,7 +25,7 @@
     </div>
 </div>
 
-<div class="container mx-auto grid grid-cols-3 md:grid-cols-3 gap-5 md:gap-9 -mt-60 md:px-20">
+<div class="container mx-auto grid grid-cols-3 md:grid-cols-3 gap-5 md:gap-7 -mt-60 md:px-40">
     <div class="card bg-[#1A4D2E] h-28 md:h-96 shadow-xl relative">
         <div class="card-body p-3 md:p-8 flex flex-col">
             <img src="{{ asset('landpage') }}/asset/ri_plant-fill.svg" alt="Jumlah Alat" class="w-6 h-6 md:h-16 md:w-16 md:mb-8">
@@ -57,7 +57,7 @@
 </div>
 
 <div class="md:h-screen text-black flex font-[Poppins] mt-40 md:-mt-40 bg-no-repeat bg-cover bg-[url('{{ asset('landpage') }}/asset/objects.svg')]">
-    <div class="container mx-auto -mt-30 md:mt-72 md:px-20">     
+    <div class="container mx-auto -mt-30 md:mt-72 md:px-40">     
         <h1 class="text-5xl md:text-6xl font-semibold">Tentang Kami</h1>
         <div class="border-8 border-[#259E30] w-[22.2rem] -mt-5"></div>
         <p class="text-sm mt-10 md:text-3xl ">

@@ -6,7 +6,7 @@
     <!-- Background pertama -->
     
     
-    <div class="container mx-auto -mt-30 md:mt-14 md:px-20">
+    <div class="container mx-auto -mt-30 md:mt-14 md:px-40">
 
         <!-- Bagian Kiri untuk Konten -->
         <div class="w-full md:w-2/3">
@@ -38,6 +38,6 @@
 <div class="absolute hidden md:block sm:block absolute w-[140vh] h-[150vh] -bottom-[45vh] right-[10vh] bg-no-repeat bg-[url('{{ asset('landpage') }}/asset/kebun.png')] bg-[length:100%]"></div>
 
 <!-- Background pertama -->
-<div class="absolute hidden md:block sm:block absolute w-[120vh] h-[100vh] -bottom-[10vh] right-[10vh] bg-no-repeat bg-[url('{{ asset('landpage') }}/asset/orangdudu.png')] bg-[length:100%]"></div>
+<div class="absolute hidden md:block sm:block absolute w-[120vh] h-[100vh] -bottom-[16vh] right-[10vh] bg-no-repeat bg-[url('{{ asset('landpage') }}/asset/orangdudu.png')] bg-[length:100%]"></div>
 
 @endsection

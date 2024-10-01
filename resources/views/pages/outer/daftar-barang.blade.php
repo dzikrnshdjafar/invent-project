@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="text-black flex font-[Poppins] bg-no-repeat bg-cover bg-[url('{{ asset('landpage') }}/asset/objects.svg')]">
-    <div class="container mx-auto -mt-30 md:mt-14 md:px-20">
+    <div class="container mx-auto -mt-30 md:mt-14 md:px-40">
         <!-- Flexbox untuk H1 dan Form Search -->
         <div class="flex flex-col md:flex-row items-start md:items-center ml-10 mt-10 space-y-4 md:space-y-0 md:justify-between">
             <h1 class="text-5xl md:text-6xl font-semibold">Daftar Alat</h1>
